@@ -87,7 +87,7 @@ module DocumentoFiscalLib
       }.merge(endereco(dest.atributo('enderDest')))
     end
 
-    def endereco(ender=nil)
+    def endereco(ender)
       return {} unless ender.present?
       {
           xLgr: ender.atributo('xLgr'),
@@ -117,7 +117,11 @@ module DocumentoFiscalLib
       itens = [itens] unless itens.is_a?(Array)
       itens.map do |item|
         produto = item.atributo('prod')
-        df_item = {
+        {
+            cdCSTICMS: cst_icms_do_item(item),
+            cdCSTIPI: cst_ipi_do_item(item),
+            cdCSTPIS: cst_pis_do_item(item),
+            cdCSTCOFINS: cst_cofins_do_item(item),
             cdItemDocFiscal: item.atributo('nItem'),
             cdCfop: produto.atributo('CFOP'),
             unidade: produto.atributo('uCom'),
@@ -126,7 +130,7 @@ module DocumentoFiscalLib
             vlTotalCI: produto.atributo('vproduto'),
             vlTotal: produto.atributo('vproduto'),
             qtTributariaUnidade: produto.atributo('uTrib'),
-            qtTributaria: produto.atributo('qTrib'),
+            qtTributaria: quantidade_tributaria_do_item(item),
             vUnTrib: produto.atributo('vUnTrib'),
             vlFrete: produto.atributo('vFrete'),
             vlSeguro: produto.atributo('vSeg'),
@@ -142,14 +146,14 @@ module DocumentoFiscalLib
             deduzCSTCOFINS: 'S',
             deduzCSTIPI: 'S',
             prodItem: produto_do_item(item),
-            enquadramentos: []
+            enquadramentos: enquadramentos_do_item(item)
         }
-        impostos_do_item(item, df_item)
       end.compact
     end
 
     def produto_do_item(item)
       produto = item.atributo('prod')
+      return {} unless produto.present?
       {
           indTot: produto.atributo('indTot'),
           cEANTrib: produto.atributo('cEANTrib'),
@@ -159,275 +163,219 @@ module DocumentoFiscalLib
           NCM: produto.atributo('NCM'),
           CEST: produto.atributo('CEST'),
           exTIPI: produto.atributo('EXTIPI'),
+          cdOrigem: origem_do_produto(item),
           aplicacao: 'C'
       }
     end
 
-    def impostos_do_item(nf_item, df_item)
-      imposto = nf_item.atributo('imposto')
-      icms_do_item(imposto.atributo('ICMS'), df_item)
-      ipi_do_item(imposto.atributo('IPI'), df_item)
-      ii_do_item(imposto.atributo('II'), df_item)
-      pis_do_item(imposto.atributo('PIS'), df_item)
-      pisst_do_item(imposto.atributo('PISST'), df_item)
-      cofins_do_item(imposto.atributo('COFINS'), df_item)
-      cofinsst_do_item(imposto.atributo('COFINSST'), df_item)
+    def icms_do_item(item)
+      unless item.atributos[:icms].present?
+        imposto = item.atributo('imposto.ICMS')
+        ['ICMS00', 'ICMS10', 'ICMS20', 'ICMS30', 'ICMS40', 'ICMS51', 'ICMS60', 'ICMS70', 'ICMS90'].each do |tipo_icms|
+          item.atributos[:icms] = imposto.atributo(tipo_icms)
+          if item.atributos[:icms].present?
+            item.atributos[:icms].atualizar(tipo: tipo_icms)
+            break
+          end
+        end
+      end
+      item.atributos[:icms]
     end
 
-    def icms_do_item(icms, df_item)
-      icms00_do_item(icms.atributo('ICMS00'), df_item)
-      icms10_do_item(icms.atributo('ICMS10'), df_item)
-      icms20_do_item(icms.atributo('ICMS20'), df_item)
-      icms30_do_item(icms.atributo('ICMS30'), df_item)
-      icms40_do_item(icms.atributo('ICMS40'), df_item)
-      icms51_do_item(icms.atributo('ICMS51'), df_item)
-      icms60_do_item(icms.atributo('ICMS60'), df_item)
-      icms70_do_item(icms.atributo('ICMS70'), df_item)
-      icms90_do_item(icms.atributo('ICMS90'), df_item)
+    def ipi_do_item(item)
+      unless item.atributos[:ipi].present?
+        item.atributos[:ipi] = item.atributo('imposto.IPI')
+        ['IPINT', 'IPITrib'].each do |tipo|
+          imposto = item.atributos[:ipi].atributo(tipo)
+          if imposto.present?
+            item.atributos[:ipi].atualizar(imposto.to_h)
+            item.atributos[:ipi].atualizar(tipo: tipo)
+            break
+          end
+        end
+      end
+      item.atributos[:ipi]
     end
 
-    # Tributação pelo ICMS
-    # 00 - Tributada integralmente
-    def icms00_do_item(icms00, df_item)
-      return unless icms00.present?
-      df_item[:enquadramentos][0] = {
+    def pis_do_item(item)
+      unless item.atributos[:pis].present?
+        item.atributos[:pis] = item.atributo('imposto.PIS')
+        ['PISNT','PISAliq', 'PISQtde', 'PISOutr'].each do |tipo|
+          imposto = item.atributos[:pis].atributo(tipo)
+          if imposto.present?
+            item.atributos[:pis].atualizar(imposto.to_h)
+            item.atributos[:pis].atualizar(tipo: tipo)
+            break
+          end
+        end
+      end
+      item.atributos[:pis]
+    end
+
+    def cofins_do_item(item)
+      unless item.atributos[:cofins].present?
+        item.atributos[:cofins] = item.atributo('imposto.COFINS')
+        ['COFINSAliq', 'COFINSQtde', 'COFINSNT', 'COFINSOutr'].each do |tipo|
+          imposto = item.atributos[:cofins].atributo(tipo)
+          if imposto.present?
+            item.atributos[:cofins].atualizar(imposto)
+            item.atributos[:cofins].atualizar(:tipo,tipo)
+            break
+          end
+        end
+      end
+      item.atributos[:cofins]
+    end
+
+    def enquadramentos_do_item(item)
+      imposto = item.attributo('imposto')
+      [
+          enquadramento_icms(icms_do_item(item)), # 0 ICMS
+          enquadramento_icmsst(icms_do_item(item)), # 1 ST
+          nil, # 2 ?
+          enquadramento_icmsste(icms_do_item(item)), # 3 STE
+          enquadramento_ipi(ipi_do_item(item)), # 4 IPI
+          enquadramento_ii(imposto.attributo('imposto.II')), # 5 II
+          enquadramento_pis(pis_do_item(item)), # 6 PIS
+          enquadramento_pisst(imposto.attributo('imposto.PISST')), # 7 PISST
+          enquadramento_cofins(cofins_do_item(item)), # 8 COFINS
+          enquadramento_cofinsst(imposto.attributo('imposto.COFINSST')), # 9 COFINSST
+      ]
+    end
+
+    def enquadramento_icms(item)
+      icms = icms_do_item(item)
+      return unless icms.present? &&
+          ['ICMS00', 'ICMS10', 'ICMS20', 'ICMS40', 'ICMS51', 'ICMS70', 'ICMS90'].exclude?(icms.atributo('tipo'))
+      {
           dsSigla: 'ICMS',
+          situacao: situacao_do_icms_cst(icms.atributo('CST')),
+          tpEnquadramento: 'IM',
+          vlTributavel: icms.atributo('vBC'),
+          vlAliquota: icms.atributo('pICMS'),
+          vlImposto: icms.atributo('vICMS'),
+          percReducaoBase: icms.atributo('pRedBC'),
+          modbc: icms.atributo('modbc')
+      }.compact
+    end
+
+    def enquadramento_icmsst(item)
+      icms = icms_do_item(item)
+      return unless icms.present? &&
+          ['ICMS10', 'ICMS30', 'ICMS70', 'ICMS90'].exclude?(icms.atributo('tipo'))
+      {
+          dsSigla: 'ST',
+          situacao: situacao_do_icms_cst(icms.atributo('CST')),
+          tpEnquadramento: 'IM',
+          vlBase: icms.atributo('vBCST'),
+          vlTributavel: icms.atributo('vBCST'),
+          vlAliquota: icms.atributo('pICMSST'),
+          vlImposto: icms.atributo('vICMSST'),
+          vlPercentualMVA: icms.atributo('pMVAST'),
+          percReducaoBase: icms.atributo('pRedBCST'),
+          modBCST: icms.atributo('modBCST')
+      }.compact
+    end
+
+    def enquadramento_icmsste(icms)
+      return unless icms.present? &&
+          ['ICMS60'].exclude?(icms.atributo('tipo'))
+      {
+          dsSigla: 'STE',
+          situacao: situacao_do_icms_cst(icms.atributo('CST')),
+          tpEnquadramento: 'IM',
+          vlBase: icms.atributo('vBCST'),
+          vlTributavel: icms.atributo('vBCSTRet'),
+          vlImposto: icms.atributo('vICMSSTRet'),
+          vlPercentualMVA: icms.atributo('pMVAST')
+      }.compact
+    end
+
+    def enquadramento_ipi(ipi)
+      return unless ipi.present?
+      vUnid = ipi.atributo('vUnid')
+      {
+          dsSigla: 'IPI',
           situacao: 'T',
           tpEnquadramento: 'IM',
-          vlTributavel: 'vBC',
-          vlAliquota: 'pICMS',
-          vlImposto: 'vICMS',
-          modbc: 'modbc'
-      }
-      orig = icms00.atributo('orig')
-      df_item.atualizar('prodItem.cdOrigem', orig)
-      df_item.atualizar('cdCSTICMS', "#{orig}#{icms00.atributo('CST')}")
+          clEnq: ipi.atributo('clEnq'),
+          CNPJProd: ipi.atributo('CNPJProd'),
+          cSelo: ipi.atributo('cSelo'),
+          qSelo: ipi.atributo('qSelo'),
+          cEnq: ipi.atributo('cEnq'),
+          vlImposto: ipi.atributo('vIPI'),
+          vlTributavel: (vUnid.present? ? 0 : ipi.atributo('vBC')),
+          vlAliquota: ipi.atributo('pIPI'),
+          vUnid: vUnid,
+          qUnid: ipi.atributo('qUnid')
+      }.compact
     end
 
-    # Tributação pelo ICMS
-    # 10 - Tributada e com cobrança do ICMS por substituição tributária
-    def parse_icms10(icms10, item)
-      return unless icms10
-
-      item[:enquadramentos][0] = {}
-      icms = item[:enquadramentos][0]
-      icms[:dsSigla] = 'ICMS'
-      icms[:situacao] = 'T'
-      icms[:tpEnquadramento] = 'IM'
-      icms[:vlTributavel] = icms10['vBC']
-      icms[:vlAliquota] = icms10['pICMS']
-      icms[:vlImposto] = icms10['vICMS']
-      icms[:modbc] = icms10['modBC']
-
-      item[:enquadramentos][1] = {}
-      st = item[:enquadramentos][1]
-      st[:dsSigla] = 'ST'
-      st[:situacao] = 'T'
-      st[:tpEnquadramento] = 'IM'
-      st[:vlTributavel] = icms10['vBCST']
-      st[:vlAliquota] = icms10['pICMSST']
-      st[:vlImposto] = icms10['vICMSST']
-      st[:modBCST] = icms10['modBCST']
-      st[:vlPercentualMVA] = icms10['pMVAST']
-
-      item[:prodItem][:cdOrigem] = icms10['orig']
-      item[:cdCSTICMS] = "#{icms10['orig']}#{icms10['CST']}"
-
-
+    def enquadramento_ii(ii)
+      return unless ii.present? && ii.atributo('vII').to_f > 0.0
+      {
+        dsSigla: 'II',
+        situacao: 'T',
+        vlTributavel: ii.atributo('vBC'),
+        vlImposto: ii.atributo('vII'),
+        vlIOF: ii.atributo('vlIOF'),
+        vDespAdu: ii.atributo('vDespAdu'),
+        tpEnquadramento: 'IM'
+      }.compact
     end
 
-
-    # Tributção pelo ICMS
-    # 20 - Com redução de base de cálculo
-    def parse_icms20(icms20, item)
-      return unless icms20
-
-      item[:enquadramentos][0] = {}
-      icms = item[:enquadramentos][0]
-      icms[:dsSigla] = 'ICMS'
-      icms[:situacao] = 'T'
-      icms[:tpEnquadramento] = 'IM'
-      icms[:vlTributavel] = icms20['vBC']
-      icms[:percReducaoBase] = icms20['pRedBC']
-      icms[:vlAliquota] = icms20['pICMS']
-      icms[:vlImposto] = icms20['vICMS']
-      icms[:modbc] = icms20['modBC']
-
-
-      item[:prodItem][:cdOrigem] = icms20['orig']
-      item[:cdCSTICMS] = "#{icms20['orig']}#{icms20['CST']}"
-
-
+    def enquadramento_pis(pis)
+      return unless pis.present?
+      {
+          dsSigla: 'PIS',
+          tpEnquadramento: 'IM',
+          situacao: 'T',
+          vlTributavel: pis.atributo('vBC'),
+          vlAliquota: pis.atributo('pPIS'),
+          vlImposto: pis.atributo('vPIS'),
+          qBCProd: pis.atributo('qBCProd'),
+          vlImpostoUnitario: pis.atributo('vAliqProd')
+      }.compact
     end
 
-
-    # Tributação pelo ICMS
-    # 30 - Isenta ou não tributada e com cobrança do ICMS por substituição tributária
-    def parse_icms30(icms30, item)
-      return unless icms30
-
-      item[:enquadramentos][1] = {}
-      st = item[:enquadramentos][1]
-      st[:dsSigla] = 'ST'
-      st[:situacao] = 'T'
-      st[:tpEnquadramento] = 'IM'
-      st[:modBCST] = icms30['modBCST']
-      st[:vlPercentualMVA] = icms30['pMVAST']
-      st[:percReducaoBase] = icms30['pRedBCST']
-      st[:vlBase] = icms30['vBCST']
-      st[:vlTributavel] = icms30['vBCST']
-      st[:vlAliquota] = icms30['pICMSST']
-      st[:vlImposto] = icms30['vICMSST']
-
-      item[:prodItem][:cdOrigem] = icms30['orig']
-      item[:cdCSTICMS] = "#{icms30['orig']}#{icms30['CST']}"
-
-
+    def enquadramento_pisst(pisst)
+      return unless pisst.present?
+      {
+          dsSigla: 'PISST',
+          tpEnquadramento: 'IM',
+          situacao: 'T',
+          vlTributavel: pisst.atributo('vBC'),
+          vlAliquota: pisst.atributo('pPIS'),
+          vlImposto: pisst.atributo('vPIS'),
+          vlImpostoUnitario: pisst.atributo('vAliqProd')
+      }.compact
     end
 
-    # Tributação pelo ICMS
-    # 40 - Isenta
-    # 41 - Não tributada
-    # 50 - Suspensão
-    def parse_icms40(icms40, item)
-      return unless icms40
-
-      item[:enquadramentos][0] = {}
-      icms = item[:enquadramentos][0]
-      icms[:dsSigla] = 'ICMS'
-
-      case icms40['CST'].to_s
-        #40 - Isenta
-        when '40' then
-          icms[:situacao] = 'I'
-        #41 - Não tributada
-        when '41' then
-          icms[:situacao] = 'N'
-        #50 - Suspensão
-        when '50' then
-          icms[:situacao] = 'S'
-      end
-
-      icms[:tpEnquadramento] = 'IM'
-
-      item[:prodItem][:cdOrigem] = icms40['orig']
-      item[:cdCSTICMS] = "#{icms40['orig']}#{icms40['CST']}"
-
-
+    def enquadramento_cofins(cofins)
+      return unless cofins.present?
+      {
+          dsSigla: 'COFINS',
+          tpEnquadramento: 'IM',
+          situacao: cofins.atributo('COFINSQtde') == '' ? 'N' : 'T',
+          vlTributavel: cofins.atributo('vBC'),
+          vlAliquota: cofins.atributo('pCOFINS'),
+          vlImposto: cofins.atributo('vCOFINS'),
+          qBCProd: cofins.atributo('qBCProd'),
+          vlImpostoUnitario: cofins.atributo('vAliqProd')
+      }.compact
     end
 
-    # Tributção pelo ICMS
-    # 51 - Diferimento
-    # A exigência do preenchimento das informações do ICMS diferido fica à critério de cada UF.
-    def parse_icms51(icms51, item)
-      return unless icms51
-
-      item[:enquadramentos][0] = {}
-      icms = item[:enquadramentos][0]
-      icms[:dsSigla] = 'ICMS'
-      icms[:situacao] = 'D'
-      icms[:tpEnquadramento] = 'IM'
-
-      icms[:vlTributavel] = icms51['vBC']
-      icms[:percReducaoBase] = icms51['pRedBC']
-      icms[:vlAliquota] = icms51['pICMS']
-      icms[:vlImposto] = icms51['vICMS']
-      icms[:modbc] = icms51['modBC']
-
-
-      item[:prodItem][:cdOrigem] = icms51['orig']
-      item[:cdCSTICMS] = "#{icms51['orig']}#{icms51['CST']}"
-
-
-    end
-
-
-    # Tributação pelo ICMS
-    # 60 - ICMS cobrado anteriormente por substituição tributária
-    def parse_icms60(icms60, item)
-      return unless icms60
-
-      item[:enquadramentos][3] = {}
-      ste = item[:enquadramentos][3]
-      ste[:dsSigla] = 'STE'
-      ste[:situacao] = 'T'
-      ste[:tpEnquadramento] = 'IM'
-      ste[:vlTributavel] = icms60['vBCSTRet']
-      ste[:vlImposto] = icms60['vICMSSTRet']
-      ste[:vlPercentualMVA] = icms60['pMVAST']
-
-
-      item[:prodItem][:cdOrigem] = icms60['orig']
-      item[:cdCSTICMS] = "#{icms60['orig']}#{icms60['CST']}"
-
-    end
-
-    # Tributação pelo ICMS
-    # 70 - Com redução de base de cálculo e cobrança do ICMS por substituição tributária
-    def parse_icms70(icms70, item)
-      return unless icms70
-
-      item[:enquadramentos][0] = {}
-      icms = item[:enquadramentos][0]
-      icms[:dsSigla] = 'ICMS'
-      icms[:situacao] = 'T'
-      icms[:tpEnquadramento] = 'IM'
-      icms[:percReducaoBase] = icms70['pRedBC']
-      icms[:vlTributavel] = icms70['vBC']
-      icms[:vlAliquota] = icms70['pICMS']
-      icms[:vlImposto] = icms70['vICMS']
-      icms[:modbc] = icms70['modBC']
-
-      item[:enquadramentos][1] = {}
-      st = item[:enquadramentos][1]
-      st[:dsSigla] = 'ST'
-      st[:situacao] = 'T'
-      st[:tpEnquadramento] = 'IM'
-      st[:modBCST] = icms70['modBCST']
-      st[:vlPercentualMVA] = icms70['pMVAST']
-      st[:percReducaoBase] = icms70['pRedBCST']
-      st[:vlTributavel] = icms70['vBCST']
-      st[:vlAliquota] = icms70['pICMSST']
-      st[:vlImposto] = icms70['vICMSST']
-
-      item[:prodItem][:cdOrigem] = icms70['orig']
-      item[:cdCSTICMS] = "#{icms70['orig']}#{icms70['CST']}"
-
-    end
-
-    # Tributação pelo ICMS
-    # 90 - Outras
-    def parse_icms90(icms90, item)
-      return unless icms90
-
-      item[:prodItem][:cdOrigem] = icms90['orig']
-      item[:cdCSTICMS] = "#{icms90['orig']}#{icms90['CST']}"
-
-
-      item[:enquadramentos][0] = {}
-      icms = item[:enquadramentos][0]
-      icms[:dsSigla] = 'ICMS'
-      icms[:situacao] = 'T'
-      icms[:tpEnquadramento] = 'IM'
-      icms[:percReducaoBase] = icms90['pRedBC']
-      icms[:vlTributavel] = icms90['vBC']
-      icms[:vlAliquota] = icms90['pICMS']
-      icms[:vlImposto] = icms90['vICMS']
-      icms[:modbc] = icms90['modBC']
-
-      item[:enquadramentos][1] = {}
-      st = item[:enquadramentos][1]
-      st[:dsSigla] = 'ST'
-      st[:situacao] = 'T'
-      st[:tpEnquadramento] = 'IM'
-      st[:modBCST] = icms90['modBCST']
-      st[:vlPercentualMVA] = icms90['pMVAST']
-      st[:percReducaoBase] = icms90['pRedBCST']
-      st[:vlTributavel] = icms90['vBCST']
-      st[:vlAliquota] = icms90['pICMSST']
-      st[:vlImposto] = icms90['vICMSST']
-
-
+    def enquadramento_cofinsst(cofinsst)
+      return unless cofinsst.present?
+      {
+          dsSigla: 'COFINSST',
+          tpEnquadramento: 'IM',
+          situacao: 'T',
+          vlTributavel: cofinsst.atributo('vBC'),
+          vlAliquota: cofinsst.atributo('pCOFINS'),
+          vlImposto: cofinsst.atributo('vCOFINS'),
+          vlImpostoUnitario: cofinsst.atributo('vAliqProd')
+      }.compact
     end
 
     def data_de_emissao
@@ -450,16 +398,55 @@ module DocumentoFiscalLib
       end
     end
 
-    private
-    def resolver_expressoes(nfe)
-      atributo = nfe.gsub(/\s+/, "")
-      if nfe =~ /\|\|/
-        atributo.split('||').map {|a| inf_nfe.atributo(a)}.compact.first
+    def origem_do_produto(item)
+      origem_do_ipi = ipi_do_item(item).atributo('orig')
+      if origem_do_ipi.present?
+        origem_do_ipi
       else
-        inf_nfe.atributo(atributo)
+        icms_do_item(item).atributo('orig')
       end
     end
 
+    def cst_icms_do_item(item)
+      "#{icms_do_item(item).atributo('orig')}#{icms_do_item(item).atributo('CST')}"
+    end
+
+    def cst_ipi_do_item(item)
+      ipi_do_item(item).atributo('CST')
+    end
+
+    def cst_pis_do_item(item)
+      pis_do_item(item).atributo('CST')
+    end
+
+    def cst_cofins_do_item(item)
+      cofins_do_item(item).atributo('CST')
+    end
+
+    def situacao_do_icms_cst(cst)
+      case cst
+        when '40' # Isenta
+          'I'
+        when '41' # Não tributada
+          'N'
+        when '50' # Suspensão
+          'S'
+        when '51' # Diferimento
+          'D'
+        else # Tributada
+          'T'
+      end
+    end
+
+    def quantidade_tributaria_do_item(item)
+      item.atributo('imposto.COFINSST.qBCProd') ||
+      item.atributo('imposto.COFINS.COFINSOutr.qBCProd') ||
+      item.atributo('imposto.PISST.qBCProd') ||
+      item.atributo('imposto.PISST.PISOutr.qBCProd') ||
+      item.atributo('prod.qTrib')
+    end
+
+    private
     def inf_nfe
       @inf_nfe ||= nfe.atributo('nfeProc.NFe.infNFe') ||
           nfe.atributo('NFe.infNFe') ||

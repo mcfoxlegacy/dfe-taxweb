@@ -20,7 +20,9 @@ describe DocumentoFiscalLib::Nfe do
       expect(subject).to receive(:retirada).and_return({})
       expect(subject).to receive(:entrega).and_return({})
       expect(subject).to receive(:itens).and_return([])
-      expect(subject.mapear_documento.keys.sort).to eq([:idDocFiscal, :natOp, :tipoPagto, :modelo, :serie, :numero, :dtEmissao, :dtES, :dtPagto, :cMunFG, :refNFP, :refCTE, :refECF, :tpImp, :tpEmis, :cDV, :tpAmb, :finNFe, :procEmi, :verProc, :dhCont, :xJust, :emitente, :destinatario, :retirada, :entrega, :itensDocFiscal, :tipoOperacao, :tpDocFiscal, :naturezaOperacao].sort)
+      documento = subject.mapear_documento
+      expect(documento).to be_a(Hash)
+      expect(documento.keys.sort).to eq([:idDocFiscal, :natOp, :tipoPagto, :modelo, :serie, :numero, :dtEmissao, :dtES, :dtPagto, :cMunFG, :refNFP, :refCTE, :refECF, :tpImp, :tpEmis, :cDV, :tpAmb, :finNFe, :procEmi, :verProc, :dhCont, :xJust, :emitente, :destinatario, :retirada, :entrega, :itensDocFiscal, :tipoOperacao, :tpDocFiscal, :naturezaOperacao].sort)
     end
   end
 
@@ -40,11 +42,11 @@ describe DocumentoFiscalLib::Nfe do
 
   describe "#endereco" do
     it "retorna o hash dos dados do endereço quando informado um hash válido" do
-      fake_hash = DocumentoFiscalLib::Conjunto.new({})
+      fake_hash = DocumentoFiscalLib::Conjunto.new({fake: true})
       expect(subject).to receive(:codigo_pais).and_return('')
       expect(subject.endereco(fake_hash).keys.sort).to eq([:xLgr, :Nro, :xCpl, :xBairro, :cdMunicipio, :xMun, :uf, :cep, :cdPais, :xPais, :fone].sort)
     end
-    it "retorna um hash vazio quando não é informado um endereço válido" do
+    it "retorna {} quando não é informado um endereço válido" do
       expect(subject.endereco({})).to eq({})
       expect(subject.endereco(nil)).to eq({})
     end
@@ -71,13 +73,76 @@ describe DocumentoFiscalLib::Nfe do
   end
 
   describe "#itens" do
-    it "retorna o array com os itens da NFe" do
-      expect(subject).to receive(:inf_nfe).and_return(DocumentoFiscalLib::Conjunto.new({entrega: {fake: true}}))
-      expect(subject.entrega).to be_a(DocumentoFiscalLib::Conjunto)
+    # it "retorna o array com os itens da NFe" do
+    #   expect(subject).to receive(:inf_nfe).and_return(DocumentoFiscalLib::Conjunto.new({entrega: {fake: true}}))
+    #   expect(subject.entrega).to be_a(DocumentoFiscalLib::Conjunto)
+    # end
+    # it "retorna [] quando não há itens" do
+    #   expect(subject.itens).to be_nil
+    # end
+  end
+
+  describe "#produto_do_item" do
+    it "retorna os atributos do produto do item informado" do
+      item = DocumentoFiscalLib::Conjunto.new({prod: {fake: true}})
+      expect(subject.produto_do_item(item).keys.sort).to eq([:indTot, :cEANTrib, :codigo, :EAN, :descricao, :NCM, :CEST, :exTIPI, :aplicacao, :cdOrigem].sort)
     end
-    it "retorna [] quando não há itens" do
-      expect(subject.itens).to be_nil
+    it "retorna {} quando não produto no item" do
+      item = DocumentoFiscalLib::Conjunto.new({prod: {}})
+      expect(subject.produto_do_item(item)).to eq({})
     end
+  end
+
+  describe "#icms_do_item" do
+
+  end
+
+  describe "#ipi_do_item" do
+
+  end
+
+  describe "#pis_do_item" do
+
+  end
+
+  describe "#enquadramentos_do_item" do
+
+  end
+
+  describe "#enquadramento_icms" do
+
+  end
+
+  describe "#enquadramento_icmsst" do
+
+  end
+
+  describe "#enquadramento_icmsste" do
+
+  end
+
+  describe "#enquadramento_ipi" do
+
+  end
+
+  describe "#enquadramento_ii" do
+
+  end
+
+  describe "#enquadramento_pis" do
+
+  end
+
+  describe "#enquadramento_pisst" do
+
+  end
+
+  describe "#enquadramento_cofins" do
+
+  end
+
+  describe "#enquadramento_cofinsst" do
+
   end
 
   describe "#data_de_emissao" do
@@ -125,5 +190,37 @@ describe DocumentoFiscalLib::Nfe do
     end
   end
 
+
+  describe "#origem_do_produto" do
+
+  end
+
+  describe "#cst_icms_do_item" do
+
+  end
+
+  describe "#cst_ipi_do_item" do
+
+  end
+
+  describe "#cst_pis_do_item" do
+
+  end
+
+  describe "#cst_cofins_do_item" do
+
+  end
+
+  describe "#situacao_do_icms_cst" do
+
+  end
+
+  describe "#quantidade_tributaria_do_item" do
+
+  end
+
+  describe "#inf_nfe" do
+
+  end
 
 end
