@@ -1,6 +1,6 @@
-require 'rails'
-require 'documento_fiscal_lib/concerns/hash_find'
-require 'documento_fiscal_lib/engine'
+require 'active_support/core_ext/hash'
+
+require 'documento_fiscal_lib/conjunto'
 require 'documento_fiscal_lib/nfe'
 
 module DocumentoFiscalLib

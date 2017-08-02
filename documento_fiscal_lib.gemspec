@@ -23,6 +23,7 @@ Gem::Specification.new do |spec|
   spec.files = Dir["lib/**/*"]
   spec.test_files = Dir["spec/**/*"]
 
-  spec.add_dependency 'rails', '>= 3'
-  spec.add_development_dependency 'rspec-rails', '~> 3.6'
+  spec.add_dependency 'activesupport', '>= 4'
+  spec.add_development_dependency 'rspec', '~> 3.6'
+  spec.add_development_dependency 'simplecov', '~> 0.14'
 end
