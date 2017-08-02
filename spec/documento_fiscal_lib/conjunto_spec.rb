@@ -22,8 +22,27 @@ describe DocumentoFiscalLib::Conjunto do
   end
 
   describe "#atributo" do
+    it "retorna um objeto quando o caminho indica um hash" do
+      expect(subject).to receive(:conjunto).and_return({a: {b: 1}})
+      expect(subject.atributo('a')).to be_a(DocumentoFiscalLib::Conjunto)
+    end
+    it "retorna uma array de objeto quando o caminho indica uma array" do
+      expect(subject).to receive(:conjunto).and_return({a: {b: [{c: 1}]}})
+      atributo = subject.atributo('a.b')
+      expect(atributo).to be_a(Array)
+      expect(atributo.first).to be_a(DocumentoFiscalLib::Conjunto)
+    end
     it "retorna o atributo do conjunto pelo caminho" do
-
+      expect(subject).to receive(:conjunto).and_return({a: {b: 1}})
+      expect(subject.atributo('a.b')).to eq(1)
+    end
+    it "retorna o atributo do conjunto pelo caminho mesmo com array" do
+      expect(subject).to receive(:conjunto).and_return({a: {b: [{c: 1}]}})
+      expect(subject.atributo('a.b[0].c')).to eq(1)
+    end
+    it "retorna nil para caminho inválido" do
+      expect(subject).to receive(:conjunto).and_return({a: {b: 1}})
+      expect(subject.atributo('a.c')).to be_nil
     end
   end
 
