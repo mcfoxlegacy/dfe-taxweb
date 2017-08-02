@@ -5,8 +5,7 @@ module DocumentoFiscalLib
 
     def initialize(nfe)
       @documento = {}
-      hash = nfe.is_a?(Hash) ? nfe : Hash.from_xml(nfe)
-      @nfe = Conjunto.new hash
+      @nfe = Conjunto.new(nfe.is_a?(Hash) ? nfe : Hash.from_xml(nfe))
     end
 
     def para_documento_fiscal
@@ -200,7 +199,7 @@ module DocumentoFiscalLib
     def pis_do_item(item)
       unless item.atributos[:pis].present?
         item.atributos[:pis] = item.atributo('imposto.PIS')
-        ['PISNT','PISAliq', 'PISQtde', 'PISOutr'].each do |tipo|
+        ['PISNT', 'PISAliq', 'PISQtde', 'PISOutr'].each do |tipo|
           imposto = item.atributos[:pis].atributo(tipo)
           if imposto.present?
             item.atributos[:pis].atualizar(imposto.to_h)
@@ -219,7 +218,7 @@ module DocumentoFiscalLib
           imposto = item.atributos[:cofins].atributo(tipo)
           if imposto.present?
             item.atributos[:cofins].atualizar(imposto)
-            item.atributos[:cofins].atualizar(:tipo,tipo)
+            item.atributos[:cofins].atualizar(:tipo, tipo)
             break
           end
         end
@@ -232,7 +231,7 @@ module DocumentoFiscalLib
       [
           enquadramento_icms(icms_do_item(item)), # 0 ICMS
           enquadramento_icmsst(icms_do_item(item)), # 1 ST
-          nil, # 2 ?
+          nil, # 2 ???
           enquadramento_icmsste(icms_do_item(item)), # 3 STE
           enquadramento_ipi(ipi_do_item(item)), # 4 IPI
           enquadramento_ii(imposto.attributo('imposto.II')), # 5 II
@@ -314,13 +313,13 @@ module DocumentoFiscalLib
     def enquadramento_ii(ii)
       return unless ii.present? && ii.atributo('vII').to_f > 0.0
       {
-        dsSigla: 'II',
-        situacao: 'T',
-        vlTributavel: ii.atributo('vBC'),
-        vlImposto: ii.atributo('vII'),
-        vlIOF: ii.atributo('vlIOF'),
-        vDespAdu: ii.atributo('vDespAdu'),
-        tpEnquadramento: 'IM'
+          dsSigla: 'II',
+          situacao: 'T',
+          vlTributavel: ii.atributo('vBC'),
+          vlImposto: ii.atributo('vII'),
+          vlIOF: ii.atributo('vlIOF'),
+          vDespAdu: ii.atributo('vDespAdu'),
+          tpEnquadramento: 'IM'
       }.compact
     end
 
@@ -440,10 +439,10 @@ module DocumentoFiscalLib
 
     def quantidade_tributaria_do_item(item)
       item.atributo('imposto.COFINSST.qBCProd') ||
-      item.atributo('imposto.COFINS.COFINSOutr.qBCProd') ||
-      item.atributo('imposto.PISST.qBCProd') ||
-      item.atributo('imposto.PISST.PISOutr.qBCProd') ||
-      item.atributo('prod.qTrib')
+          item.atributo('imposto.COFINS.COFINSOutr.qBCProd') ||
+          item.atributo('imposto.PISST.qBCProd') ||
+          item.atributo('imposto.PISST.PISOutr.qBCProd') ||
+          item.atributo('prod.qTrib')
     end
 
     private
