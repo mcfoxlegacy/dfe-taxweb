@@ -1,8 +1,8 @@
 require "spec_helper"
 
 describe DocumentoFiscalLib::Nfe do
-  let(:nfe_xml_string) {File.read("spec/fixtures/files/nfe.xml")}
-  subject {described_class.new(nfe_xml_string)}
+  # let(:nfe_xml_string) {File.read("spec/fixtures/files/nfe.xml")}
+  subject {described_class.new('<xml></xml>')}
 
   describe "#para_documento_fiscal" do
     it "atribui o mapeamento do documento" do
