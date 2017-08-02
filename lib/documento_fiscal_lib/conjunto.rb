@@ -68,7 +68,7 @@ end
 
 # FIX nil.atributo(...)
 class NilClass
-  def atributo(*args)
+  def atributo(*_)
     nil
   end
 end
