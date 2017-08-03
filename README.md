@@ -12,10 +12,11 @@ Adicione essa linha no Gemfile da sua aplicação:
 ```ruby
 gem 'documento_fiscal_lib',  :git => 'https://TOKEN:x-oauth-basic@github.com/taxweb/documento_fiscal_lib.git'
 ```
+Troque `TOKEN` pelo seu [personal access token](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/) do GitHub
 
-E então execute no terminal na raiz do seu projeto:
+E então execute no terminal no diretório do seu projeto:
 
-    $ bundle
+    $ bundle install
 
 ## Dependência
 
