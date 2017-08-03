@@ -2,12 +2,12 @@ module DocumentoFiscalLib
   class Conjunto
 
     attr_reader :conjunto
-    attr_accessor :atributos
+    attr_accessor :dados
     delegate :present?, :to_s, to: :conjunto
 
     def initialize(hash)
       @conjunto = hash.deep_symbolize_keys
-      @atributos = {}
+      @dados = {}
     end
 
     def to_h
@@ -16,6 +16,14 @@ module DocumentoFiscalLib
 
     def [](key)
       conjunto[key]
+    end
+
+    def dados(key, valor=nil)
+      if valor.present?
+        @dados[key.to_sym] = valor
+      else
+        @dados.try(:[], key.to_sym)
+      end
     end
 
     def atributo(path)
@@ -66,9 +74,12 @@ module DocumentoFiscalLib
   end
 end
 
-# FIX nil.atributo(...)
+# FIX nil.atributo() nil.dados()
 class NilClass
   def atributo(*_)
+    nil
+  end
+  def dados(*_)
     nil
   end
 end

@@ -168,83 +168,81 @@ module DocumentoFiscalLib
     end
 
     def icms_do_item(item)
-      unless item.atributos[:icms].present?
+      unless item.dados(:icms).present?
         imposto = item.atributo('imposto.ICMS')
         ['ICMS00', 'ICMS10', 'ICMS20', 'ICMS30', 'ICMS40', 'ICMS51', 'ICMS60', 'ICMS70', 'ICMS90'].each do |tipo_icms|
-          item.atributos[:icms] = imposto.atributo(tipo_icms)
-          if item.atributos[:icms].present?
-            item.atributos[:icms].atualizar(tipo: tipo_icms)
+          item.dados(:icms, imposto.atributo(tipo_icms))
+          if item.dados(:icms).present?
+            item.dados(:icms).atualizar(tipo: tipo_icms)
             break
           end
         end
       end
-      item.atributos[:icms]
+      item.dados(:icms)
     end
 
     def ipi_do_item(item)
-      unless item.atributos[:ipi].present?
-        item.atributos[:ipi] = item.atributo('imposto.IPI')
+      unless item.dados(:ipi).present?
+        item.dados(:ipi, item.atributo('imposto.IPI'))
         ['IPINT', 'IPITrib'].each do |tipo|
-          imposto = item.atributos[:ipi].atributo(tipo)
+          imposto = item.dados(:ipi).atributo(tipo)
           if imposto.present?
-            item.atributos[:ipi].atualizar(imposto.to_h)
-            item.atributos[:ipi].atualizar(tipo: tipo)
+            item.dados(:ipi).atualizar(imposto.to_h)
+            item.dados(:ipi).atualizar(tipo: tipo)
             break
           end
         end
       end
-      item.atributos[:ipi]
+      item.dados(:ipi)
     end
 
     def pis_do_item(item)
-      unless item.atributos[:pis].present?
-        item.atributos[:pis] = item.atributo('imposto.PIS')
+      unless item.dados(:pis).present?
+        imposto = item.atributo('imposto.PIS')
         ['PISNT', 'PISAliq', 'PISQtde', 'PISOutr'].each do |tipo|
-          imposto = item.atributos[:pis].atributo(tipo)
-          if imposto.present?
-            item.atributos[:pis].atualizar(imposto.to_h)
-            item.atributos[:pis].atualizar(tipo: tipo)
+          item.dados(:pis, imposto.atributo(tipo))
+          if item.dados(:pis).present?
+            item.dados(:pis).atualizar(tipo: tipo)
             break
           end
         end
       end
-      item.atributos[:pis]
+      item.dados(:pis)
     end
 
     def cofins_do_item(item)
-      unless item.atributos[:cofins].present?
-        item.atributos[:cofins] = item.atributo('imposto.COFINS')
+      unless item.dados(:cofins).present?
+        imposto = item.atributo('imposto.COFINS')
         ['COFINSAliq', 'COFINSQtde', 'COFINSNT', 'COFINSOutr'].each do |tipo|
-          imposto = item.atributos[:cofins].atributo(tipo)
-          if imposto.present?
-            item.atributos[:cofins].atualizar(imposto)
-            item.atributos[:cofins].atualizar(:tipo, tipo)
+          item.dados(:cofins, imposto.atributo(tipo))
+          if item.dados(:cofins).present?
+            item.dados(:cofins).atualizar(tipo: tipo)
             break
           end
         end
       end
-      item.atributos[:cofins]
+      item.dados(:cofins)
     end
 
     def enquadramentos_do_item(item)
-      imposto = item.attributo('imposto')
+      imposto = item.atributo('imposto')
+      icms = icms_do_item(item)
       [
-          enquadramento_icms(icms_do_item(item)), # 0 ICMS
-          enquadramento_icmsst(icms_do_item(item)), # 1 ST
+          enquadramento_icms(icms), # 0 ICMS
+          enquadramento_icmsst(icms), # 1 ST
           nil, # 2 ???
-          enquadramento_icmsste(icms_do_item(item)), # 3 STE
+          enquadramento_icmsste(icms), # 3 STE
           enquadramento_ipi(ipi_do_item(item)), # 4 IPI
-          enquadramento_ii(imposto.attributo('imposto.II')), # 5 II
+          enquadramento_ii(imposto.atributo('II')), # 5 II
           enquadramento_pis(pis_do_item(item)), # 6 PIS
-          enquadramento_pisst(imposto.attributo('imposto.PISST')), # 7 PISST
+          enquadramento_pisst(imposto.atributo('PISST')), # 7 PISST
           enquadramento_cofins(cofins_do_item(item)), # 8 COFINS
-          enquadramento_cofinsst(imposto.attributo('imposto.COFINSST')), # 9 COFINSST
+          enquadramento_cofinsst(imposto.atributo('COFINSST')), # 9 COFINSST
       ]
     end
 
-    def enquadramento_icms(item)
-      icms = icms_do_item(item)
-      return unless icms.present? &&
+    def enquadramento_icms(icms)
+      return if icms.blank? ||
           ['ICMS00', 'ICMS10', 'ICMS20', 'ICMS40', 'ICMS51', 'ICMS70', 'ICMS90'].exclude?(icms.atributo('tipo'))
       {
           dsSigla: 'ICMS',
@@ -258,9 +256,8 @@ module DocumentoFiscalLib
       }.compact
     end
 
-    def enquadramento_icmsst(item)
-      icms = icms_do_item(item)
-      return unless icms.present? &&
+    def enquadramento_icmsst(icms)
+      return if icms.blank? ||
           ['ICMS10', 'ICMS30', 'ICMS70', 'ICMS90'].exclude?(icms.atributo('tipo'))
       {
           dsSigla: 'ST',
@@ -277,7 +274,7 @@ module DocumentoFiscalLib
     end
 
     def enquadramento_icmsste(icms)
-      return unless icms.present? &&
+      return if icms.blank? ||
           ['ICMS60'].exclude?(icms.atributo('tipo'))
       {
           dsSigla: 'STE',
@@ -291,7 +288,7 @@ module DocumentoFiscalLib
     end
 
     def enquadramento_ipi(ipi)
-      return unless ipi.present?
+      return if ipi.blank?
       vUnid = ipi.atributo('vUnid')
       {
           dsSigla: 'IPI',
@@ -311,7 +308,7 @@ module DocumentoFiscalLib
     end
 
     def enquadramento_ii(ii)
-      return unless ii.present? && ii.atributo('vII').to_f > 0.0
+      return if ii.blank? || ii.atributo('vII').to_f <= 0.0
       {
           dsSigla: 'II',
           situacao: 'T',
@@ -355,7 +352,7 @@ module DocumentoFiscalLib
       {
           dsSigla: 'COFINS',
           tpEnquadramento: 'IM',
-          situacao: cofins.atributo('COFINSQtde') == '' ? 'N' : 'T',
+          situacao: cofins.atributo('tipo') == 'COFINSNT' ? 'N' : 'T',
           vlTributavel: cofins.atributo('vBC'),
           vlAliquota: cofins.atributo('pCOFINS'),
           vlImposto: cofins.atributo('vCOFINS'),
@@ -398,16 +395,13 @@ module DocumentoFiscalLib
     end
 
     def origem_do_produto(item)
-      origem_do_ipi = ipi_do_item(item).atributo('orig')
-      if origem_do_ipi.present?
-        origem_do_ipi
-      else
-        icms_do_item(item).atributo('orig')
-      end
+      ipi_do_item(item).atributo('orig') || icms_do_item(item).atributo('orig')
     end
 
     def cst_icms_do_item(item)
-      "#{icms_do_item(item).atributo('orig')}#{icms_do_item(item).atributo('CST')}"
+      icms = icms_do_item(item)
+      cst_icms = "#{icms.atributo('orig')}#{icms.atributo('CST')}"
+      cst_icms.present? ? cst_icms : nil
     end
 
     def cst_ipi_do_item(item)
@@ -423,7 +417,8 @@ module DocumentoFiscalLib
     end
 
     def situacao_do_icms_cst(cst)
-      case cst
+      return if cst.blank?
+      case cst.to_s
         when '40' # Isenta
           'I'
         when '41' # Não tributada
@@ -441,7 +436,7 @@ module DocumentoFiscalLib
       item.atributo('imposto.COFINSST.qBCProd') ||
           item.atributo('imposto.COFINS.COFINSOutr.qBCProd') ||
           item.atributo('imposto.PISST.qBCProd') ||
-          item.atributo('imposto.PISST.PISOutr.qBCProd') ||
+          item.atributo('imposto.PIS.PISOutr.qBCProd') ||
           item.atributo('prod.qTrib')
     end
 
