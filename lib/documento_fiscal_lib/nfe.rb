@@ -307,7 +307,7 @@ module DocumentoFiscalLib
           qSelo: ipi.atributo('qSelo'),
           cEnq: ipi.atributo('cEnq'),
           vlImposto: ipi.atributo('vIPI'),
-          vlTributavel: (vlr_unid.present? ? 0 : ipi.atributo('vBC')),
+          vlTributavel: (vlr_unid.present? && vlr_unid.to_f > 0 ? 0 : ipi.atributo('vBC')),
           vlAliquota: ipi.atributo('pIPI'),
           vUnid: vlr_unid,
           qUnid: ipi.atributo('qUnid')
