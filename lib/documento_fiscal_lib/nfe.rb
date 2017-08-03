@@ -293,7 +293,7 @@ module DocumentoFiscalLib
 
     def enquadramento_ipi(ipi)
       return if ipi.blank?
-      vUnid = ipi.atributo('vUnid')
+      vlr_unid = ipi.atributo('vUnid')
       {
           dsSigla: 'IPI',
           situacao: 'T',
@@ -304,9 +304,9 @@ module DocumentoFiscalLib
           qSelo: ipi.atributo('qSelo'),
           cEnq: ipi.atributo('cEnq'),
           vlImposto: ipi.atributo('vIPI'),
-          vlTributavel: (vUnid.present? ? 0 : ipi.atributo('vBC')),
+          vlTributavel: (vlr_unid.present? ? 0 : ipi.atributo('vBC')),
           vlAliquota: ipi.atributo('pIPI'),
-          vUnid: vUnid,
+          vUnid: vlr_unid,
           qUnid: ipi.atributo('qUnid')
       }.compact
     end
@@ -390,11 +390,12 @@ module DocumentoFiscalLib
       end
     end
 
-    def codigo_pais(cPais)
-      if cPais.nil? || cPais == '1058'
+    # cod_pais = NFe cPais
+    def codigo_pais(cod_pais)
+      if cod_pais.nil? || cod_pais == '1058'
         '105'
       else
-        cPais
+        cod_pais
       end
     end
 
