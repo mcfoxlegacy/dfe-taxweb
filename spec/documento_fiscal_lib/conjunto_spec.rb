@@ -47,8 +47,14 @@ describe DocumentoFiscalLib::Conjunto do
   end
 
   describe "#atualizar" do
-    it "atualiza ou cria o valor no conjunto seguindo o caminho informado" do
-
+    let(:conjunto_obj){described_class.new({a: :b, c: :d})}
+    it "faz um merge do hash informado com o hash do conjunto" do
+      conjunto_obj.atualizar({a: :z})
+      expect(conjunto_obj.conjunto).to eq({a: :z, c: :d})
+    end
+    it "retorna o proprio objeto possibilitando method chain" do
+      conjunto_obj.atualizar(a: 1).atualizar(a: 2)
+      expect(conjunto_obj.conjunto).to eq({a: 2, c: :d})
     end
   end
 

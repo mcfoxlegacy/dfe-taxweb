@@ -42,22 +42,9 @@ module DocumentoFiscalLib
       end
     end
 
-    # TODO: melhorar quando a atualização for feita via 'x.y.z'
-    def atualizar(path, valor=nil)
-      if path.is_a?(Hash)
-        conjunto.deep_merge!(path.deep_symbolize_keys)
-      else
-        elemento = path.split(".").inject(conjunto) do |item, key|
-          if key =~ /\[\d+\]/
-            k = key.sub(/\[\d+\]/, '').to_sym
-            item ||= {k: []}
-            item[k][key[/\[(\d+)\]/, 1].to_i]
-          else
-            item ||= {}
-            item[key.to_sym]
-          end
-        end
-        elemento = valor
+    def atualizar(hash)
+      if hash.is_a?(Hash)
+        conjunto.deep_merge!(hash.deep_symbolize_keys)
       end
       self
     end
