@@ -1,3 +1,9 @@
+# ~~~~ PARA ENVIAR A COBERTURA DE TESTE DO CODACY DESCOMENTE AS DUAS LINHAS ABAIXO
+# require 'codacy-coverage'
+# Codacy::Reporter.start
+# ~~~~ E EXECUTE NO TERMINAL O COMANDO ABAIXO:
+# CODACY_PROJECT_TOKEN=5adfebf01b254e7a86f7ff33f9d5d669 CODACY_RUN_LOCAL=true rspec
+
 require 'simplecov'
 SimpleCov.start
 SimpleCov.start do
