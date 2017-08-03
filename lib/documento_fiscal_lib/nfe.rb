@@ -48,11 +48,12 @@ module DocumentoFiscalLib
           tipoOperacao: tipo_de_operacao,
           tpDocFiscal: 'FT',
           naturezaOperacao: '002'
-      }
+      }.compact
     end
 
     def emitente
       emit = inf_nfe.atributo('emit')
+      endereco = endereco(emit.atributo('enderEmit'))
       {
           cnpj: emit.atributo('CNPJ'),
           cpf: emit.atributo('CPF'),
@@ -70,11 +71,12 @@ module DocumentoFiscalLib
           contribuinteCOFINS: emit.atributo('CNPJ') ? 'S' : 'N',
           contribuinteII: 'S',
           simplesNac: [1, 2].include?(emit.atributo('CRT')) ? 'S' : 'N'
-      }.merge(endereco(emit.atributo('enderEmit')))
+      }.merge(endereco).compact
     end
 
     def destinatario
       dest = inf_nfe.atributo('dest')
+      endereco = endereco(dest.atributo('enderDest'))
       {
           cnpj: dest.atributo('CNPJ'),
           cpf: dest.atributo('CPF'),
@@ -87,7 +89,7 @@ module DocumentoFiscalLib
           contribuinteII: 'S',
           ISUF: dest.atributo('ISUF'),
           email: dest.atributo('email')
-      }.merge(endereco(dest.atributo('enderDest')))
+      }.merge(endereco).compact
     end
 
     def endereco(ender)
@@ -104,7 +106,7 @@ module DocumentoFiscalLib
           cdPais: codigo_pais(ender.atributo('cPais')),
           xPais: ender.atributo('xPais'),
           fone: ender.atributo('fone')
-      }
+      }.compact
     end
 
     def retirada
@@ -120,6 +122,7 @@ module DocumentoFiscalLib
       itens = [itens] unless itens.is_a?(Array)
       itens.map do |item|
         produto = item.atributo('prod')
+        next unless produto.present?
         {
             cdCSTICMS: cst_icms_do_item(item),
             cdCSTIPI: cst_ipi_do_item(item),
@@ -150,7 +153,7 @@ module DocumentoFiscalLib
             deduzCSTIPI: 'S',
             prodItem: produto_do_item(item),
             enquadramentos: enquadramentos_do_item(item)
-        }
+        }.compact
       end.compact
     end
 
@@ -168,7 +171,7 @@ module DocumentoFiscalLib
           exTIPI: produto.atributo('EXTIPI'),
           cdOrigem: origem_do_produto(item),
           aplicacao: 'C'
-      }
+      }.compact
     end
 
     def icms_do_item(item)
