@@ -4,6 +4,22 @@ describe DocumentoFiscalLib::Nfe do
   # let(:nfe_xml_string) {File.read("spec/fixtures/files/nfe.xml")}
   subject {described_class.new('<xml></xml>')}
 
+  describe "#initialize" do
+    it "requer o envio de 1 parametro" do
+      expect{described_class.new}.to raise_error(ArgumentError)
+    end
+    it "requer o parametro como sendo hash ou xml_string" do
+      expect(described_class.new({fake: true})).to be_a(DocumentoFiscalLib::Nfe)
+      expect(described_class.new('<xml></xml>')).to be_a(DocumentoFiscalLib::Nfe)
+    end
+    it "retorna TypeError caso o parametro não seja Hash ou XmlString" do
+      expect{described_class.new([])}.to raise_error(TypeError)
+      expect{described_class.new('')}.to raise_error(TypeError)
+      expect{described_class.new(1)}.to raise_error(TypeError)
+      expect{described_class.new(Object.new)}.to raise_error(TypeError)
+    end
+  end
+
   describe "#para_documento_fiscal" do
     it "atribui o mapeamento do documento" do
       expect(subject).to receive(:mapear_documento).and_return({})

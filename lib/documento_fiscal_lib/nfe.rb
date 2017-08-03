@@ -5,7 +5,11 @@ module DocumentoFiscalLib
 
     def initialize(nfe)
       @documento = {}
-      @nfe = Conjunto.new(nfe.is_a?(Hash) ? nfe : Hash.from_xml(nfe))
+      hash = nfe.is_a?(Hash) ? nfe : Hash.from_xml(nfe)
+      if hash.blank?
+        raise TypeError, 'Invalid NFe type, need Hash ou XML(string)'
+      end
+      @nfe = Conjunto.new(hash)
     end
 
     def para_documento_fiscal
