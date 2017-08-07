@@ -20,10 +20,10 @@ describe DfeTaxweb::Nfe do
     end
   end
 
-  describe "#para_documento_fiscal" do
+  describe "#to_dfe" do
     it "atribui o mapeamento do documento" do
       expect(subject).to receive(:mapear_documento).and_return({})
-      expect(subject.para_documento_fiscal).to be_a(Hash)
+      expect(subject.to_dfe).to be_a(Hash)
     end
   end
 

@@ -12,7 +12,7 @@ module DfeTaxweb
       @nfe = Conjunto.new(hash)
     end
 
-    def para_documento_fiscal
+    def to_dfe
       @documento = mapear_documento
     end
 

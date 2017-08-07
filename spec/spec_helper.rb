@@ -2,7 +2,7 @@
 # require 'codacy-coverage'
 # Codacy::Reporter.start
 # ~~~~ E EXECUTE NO TERMINAL O COMANDO ABAIXO:
-# CODACY_PROJECT_TOKEN=5adfebf01b254e7a86f7ff33f9d5d669 CODACY_RUN_LOCAL=true rspec
+# CODACY_PROJECT_TOKEN=777f4d2ca8794cb485439289ceb35303 CODACY_RUN_LOCAL=true rspec
 
 require 'simplecov'
 SimpleCov.start
