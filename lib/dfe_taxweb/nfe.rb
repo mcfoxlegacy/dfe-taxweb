@@ -1,4 +1,4 @@
-module DocumentoFiscalLib
+module DfeTaxweb
   class Nfe
 
     attr_reader :nfe, :documento
@@ -133,8 +133,8 @@ module DocumentoFiscalLib
             unidade: produto.atributo('uCom'),
             qtItemDocFiscal: produto.atributo('qCom'),
             vlUnitario: produto.atributo('vUnCom'),
-            vlTotalCI: produto.atributo('vproduto'),
-            vlTotal: produto.atributo('vproduto'),
+            vlTotalCI: produto.atributo('vProd'),
+            vlTotal: produto.atributo('vProd'),
             qtTributariaUnidade: produto.atributo('uTrib'),
             qtTributaria: quantidade_tributaria_do_item(item),
             vUnTrib: produto.atributo('vUnTrib'),

@@ -1,16 +1,16 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
-require 'documento_fiscal_lib/version'
+require 'dfe_taxweb/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'documento_fiscal_lib'
-  spec.version       = DocumentoFiscalLib::VERSION
+  spec.name          = 'dfe-taxweb'
+  spec.version       = DfeTaxweb::VERSION
   spec.authors       = ['Bruno Porto']
   spec.email         = ['brunotporto@gmail.com']
   spec.summary       = 'Biblioteca Documento Fiscal'
   spec.description   = 'Biblioteca Documento Fiscal'
-  spec.homepage      = 'https://github.com/taxweb/documento_fiscal_lib/'
+  spec.homepage      = 'https://github.com/taxweb/dfe_taxweb/'
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
   # delete this section to allow pushing this gem to any host.

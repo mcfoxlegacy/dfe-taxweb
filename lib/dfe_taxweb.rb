@@ -2,13 +2,13 @@
 require 'active_support/core_ext/hash'
 require 'active_support/core_ext/enumerable'
 
-require 'documento_fiscal_lib/conjunto'
-require 'documento_fiscal_lib/nfe'
+require 'dfe_taxweb/conjunto'
+require 'dfe_taxweb/nfe'
 
-module DocumentoFiscalLib
+module DfeTaxweb
 
   def self.nfe(xml_or_hash)
-    DocumentoFiscalLib::Nfe.new xml_or_hash
+    DfeTaxweb::Nfe.new xml_or_hash
   end
 
 end

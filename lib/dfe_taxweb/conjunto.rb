@@ -1,4 +1,4 @@
-module DocumentoFiscalLib
+module DfeTaxweb
   class Conjunto
 
     attr_reader :conjunto

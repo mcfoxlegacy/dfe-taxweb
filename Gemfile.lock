@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    documento_fiscal_lib (0.0.1)
+    dfe-taxweb (0.0.2)
       activesupport (>= 4)
 
 GEM
@@ -47,7 +47,7 @@ PLATFORMS
 
 DEPENDENCIES
   codacy-coverage (~> 1.1)
-  documento_fiscal_lib!
+  dfe-taxweb!
   rspec (~> 3.6)
   simplecov (~> 0.14)
 

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe DocumentoFiscalLib::Conjunto do
+describe DfeTaxweb::Conjunto do
   subject {described_class.new({fake: true})}
 
   describe "#initialize" do
@@ -24,13 +24,13 @@ describe DocumentoFiscalLib::Conjunto do
   describe "#atributo" do
     it "retorna um objeto quando o caminho indica um hash" do
       expect(subject).to receive(:conjunto).and_return({a: {b: 1}})
-      expect(subject.atributo('a')).to be_a(DocumentoFiscalLib::Conjunto)
+      expect(subject.atributo('a')).to be_a(DfeTaxweb::Conjunto)
     end
     it "retorna uma array de objeto quando o caminho indica uma array" do
       expect(subject).to receive(:conjunto).and_return({a: {b: [{c: 1}]}})
       atributo = subject.atributo('a.b')
       expect(atributo).to be_a(Array)
-      expect(atributo.first).to be_a(DocumentoFiscalLib::Conjunto)
+      expect(atributo.first).to be_a(DfeTaxweb::Conjunto)
     end
     it "retorna o atributo do conjunto pelo caminho" do
       expect(subject).to receive(:conjunto).and_return({a: {b: 1}})
@@ -60,7 +60,7 @@ describe DocumentoFiscalLib::Conjunto do
 
   describe "#normaliza_valores" do
     it "retorna uma nova instancia do conjunto caso o valor informado seja um Hash" do
-      expect(subject.send(:normaliza_valores, {teste: true})).to be_a(DocumentoFiscalLib::Conjunto)
+      expect(subject.send(:normaliza_valores, {teste: true})).to be_a(DfeTaxweb::Conjunto)
     end
     it "retorna o valor informado caso ele não seja um hash" do
       expect(subject.send(:normaliza_valores, 'teste')).to eq('teste')

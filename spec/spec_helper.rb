@@ -8,14 +8,14 @@ require 'simplecov'
 SimpleCov.start
 SimpleCov.start do
   SimpleCov.start do
-    add_group 'Arquivos', ['documento_fiscal_lib', 'lib/documento_fiscal_lib']
+    add_group 'Arquivos', ['dfe_taxweb', 'lib/dfe_taxweb']
     add_filter 'spec'
   end
 end
 
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 
-require "documento_fiscal_lib"
+require "dfe_taxweb"
 
 Dir["spec/support/**/*.rb"].each { |f| load f }
 Dir["spec/shared_examples/**/*.rb"].each { |f| load f }

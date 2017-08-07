@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe DocumentoFiscalLib::Nfe do
+describe DfeTaxweb::Nfe do
   # let(:nfe_xml_string) {File.read("spec/fixtures/files/nfe.xml")}
   subject {described_class.new('<xml></xml>')}
 
@@ -9,8 +9,8 @@ describe DocumentoFiscalLib::Nfe do
       expect{described_class.new}.to raise_error(ArgumentError)
     end
     it "requer o parametro como sendo hash ou xml_string" do
-      expect(described_class.new({fake: true})).to be_a(DocumentoFiscalLib::Nfe)
-      expect(described_class.new('<xml></xml>')).to be_a(DocumentoFiscalLib::Nfe)
+      expect(described_class.new({fake: true})).to be_a(DfeTaxweb::Nfe)
+      expect(described_class.new('<xml></xml>')).to be_a(DfeTaxweb::Nfe)
     end
     it "retorna TypeError caso o parametro não seja Hash ou XmlString" do
       expect{described_class.new([])}.to raise_error(TypeError)
@@ -38,29 +38,29 @@ describe DocumentoFiscalLib::Nfe do
       expect(subject).to receive(:itens).and_return([])
       documento = subject.mapear_documento
       expect(documento).to be_a(Hash)
-      expect(documento.keys.sort).to eq([:idDocFiscal, :natOp, :tipoPagto, :modelo, :serie, :numero, :dtEmissao, :dtES, :dtPagto, :cMunFG, :refNFP, :refCTE, :refECF, :tpImp, :tpEmis, :cDV, :tpAmb, :finNFe, :procEmi, :verProc, :dhCont, :xJust, :emitente, :destinatario, :retirada, :entrega, :itensDocFiscal, :tipoOperacao, :tpDocFiscal, :naturezaOperacao].sort)
+      expect(documento.keys.sort).to eq([:destinatario, :emitente, :entrega, :itensDocFiscal, :naturezaOperacao, :retirada, :tpDocFiscal].sort)
     end
   end
 
   describe "#emitente" do
     it "retorna o hash de emitente" do
       expect(subject).to receive(:endereco).and_return({})
-      expect(subject.emitente.keys.sort).to eq([:cnpj, :cpf, :nome, :xFant, :inscricaoEstadual, :IEST, :inscricaoMunicipal, :cdAtividadeEconomica, :contribuinteICMS, :contribuinteST, :contribuinteISS, :contribuintePIS, :contribuinteCOFINS, :contribuinteII, :simplesNac].sort)
+      expect(subject.emitente.keys.sort).to eq([:contribuinteCOFINS, :contribuinteICMS, :contribuinteII, :contribuinteISS, :contribuintePIS, :contribuinteST, :simplesNac].sort)
     end
   end
 
   describe "#destinatario" do
     it "retorna o hash de destinatario" do
       expect(subject).to receive(:endereco).and_return({})
-      expect(subject.destinatario.keys.sort).to eq([:cnpj, :cpf, :nome, :inscricaoEstadual, :contribuinteICMS, :contribuintePIS, :contribuinteCOFINS, :contribuinteII, :ISUF, :email].sort)
+      expect(subject.destinatario.keys.sort).to eq([:contribuinteCOFINS, :contribuinteICMS, :contribuinteII, :contribuintePIS].sort)
     end
   end
 
   describe "#endereco" do
     it "retorna o hash dos dados do endereço quando informado um hash válido" do
-      fake_hash = DocumentoFiscalLib::Conjunto.new({fake: true})
+      fake_hash = DfeTaxweb::Conjunto.new({fake: true})
       expect(subject).to receive(:codigo_pais).and_return('')
-      expect(subject.endereco(fake_hash).keys.sort).to eq([:xLgr, :Nro, :xCpl, :xBairro, :cdMunicipio, :xMun, :uf, :cep, :cdPais, :xPais, :fone].sort)
+      expect(subject.endereco(fake_hash).keys.sort).to eq([:cdPais].sort)
     end
     it "retorna {} quando não é informado um endereço válido" do
       expect(subject.endereco({})).to eq({})
@@ -70,8 +70,8 @@ describe DocumentoFiscalLib::Nfe do
 
   describe "#retirada" do
     it "retorna o hash de retirada" do
-      expect(subject).to receive_message_chain(:inf_nfe).and_return(DocumentoFiscalLib::Conjunto.new({retirada: {fake: true}}))
-      expect(subject.retirada).to be_a(DocumentoFiscalLib::Conjunto)
+      expect(subject).to receive_message_chain(:inf_nfe).and_return(DfeTaxweb::Conjunto.new({retirada: {fake: true}}))
+      expect(subject.retirada).to be_a(DfeTaxweb::Conjunto)
     end
     it "retorna nil quando não há retirada" do
       expect(subject.retirada).to be_nil
@@ -80,8 +80,8 @@ describe DocumentoFiscalLib::Nfe do
 
   describe "#entrega" do
     it "retorna o hash de entrega" do
-      expect(subject).to receive(:inf_nfe).and_return(DocumentoFiscalLib::Conjunto.new({entrega: {fake: true}}))
-      expect(subject.entrega).to be_a(DocumentoFiscalLib::Conjunto)
+      expect(subject).to receive(:inf_nfe).and_return(DfeTaxweb::Conjunto.new({entrega: {fake: true}}))
+      expect(subject.entrega).to be_a(DfeTaxweb::Conjunto)
     end
     it "retorna nil quando não há entrega" do
       expect(subject.retirada).to be_nil
@@ -90,7 +90,7 @@ describe DocumentoFiscalLib::Nfe do
 
   describe "#itens" do
     it "retorna o hash de entrega" do
-      expect(subject).to receive(:inf_nfe).and_return(DocumentoFiscalLib::Conjunto.new({det: [{fake: true}]}))
+      expect(subject).to receive(:inf_nfe).and_return(DfeTaxweb::Conjunto.new({det: [{prod: {fake: true}}]}))
       expect(subject).to receive(:cst_icms_do_item).and_return(true)
       expect(subject).to receive(:cst_ipi_do_item).and_return(true)
       expect(subject).to receive(:cst_pis_do_item).and_return(true)
@@ -105,18 +105,18 @@ describe DocumentoFiscalLib::Nfe do
       expect(item[:cdClassificacao]).to eq('M')
     end
     it "retorna array vazia quando não há itens" do
-      expect(subject).to receive(:inf_nfe).and_return(DocumentoFiscalLib::Conjunto.new({det: []}))
+      expect(subject).to receive(:inf_nfe).and_return(DfeTaxweb::Conjunto.new({det: []}))
       expect(subject.itens).to eq([])
     end
   end
 
   describe "#produto_do_item" do
     it "retorna os atributos do produto do item informado" do
-      item = DocumentoFiscalLib::Conjunto.new({prod: {fake: true}})
-      expect(subject.produto_do_item(item).keys.sort).to eq([:indTot, :cEANTrib, :codigo, :EAN, :descricao, :NCM, :CEST, :exTIPI, :aplicacao, :cdOrigem].sort)
+      item = DfeTaxweb::Conjunto.new({prod: {fake: true}})
+      expect(subject.produto_do_item(item).keys.sort).to eq([:aplicacao].sort)
     end
     it "retorna {} quando não produto no item" do
-      item = DocumentoFiscalLib::Conjunto.new({prod: {}})
+      item = DfeTaxweb::Conjunto.new({prod: {}})
       expect(subject.produto_do_item(item)).to eq({})
     end
   end
@@ -124,14 +124,14 @@ describe DocumentoFiscalLib::Nfe do
   describe "#icms_do_item" do
     it "retorna o hash de informações do imposto ICMS" do
       ['ICMS00', 'ICMS10', 'ICMS20', 'ICMS30', 'ICMS40', 'ICMS51', 'ICMS60', 'ICMS70', 'ICMS90'].each do |tipo|
-        item = DocumentoFiscalLib::Conjunto.new({imposto: {ICMS: {tipo => {fake: true}}}})
+        item = DfeTaxweb::Conjunto.new({imposto: {ICMS: {tipo => {fake: true}}}})
         imposto = subject.icms_do_item(item)
-        expect(imposto).to be_a(DocumentoFiscalLib::Conjunto)
+        expect(imposto).to be_a(DfeTaxweb::Conjunto)
         expect(imposto.atributo('tipo')).to eq(tipo)
       end
     end
     it "retorna nil quando o icms não existe" do
-      item = DocumentoFiscalLib::Conjunto.new({imposto: {ICMS: {:ICMSFAKE => {fake: true}}}})
+      item = DfeTaxweb::Conjunto.new({imposto: {ICMS: {:ICMSFAKE => {fake: true}}}})
       expect(subject.icms_do_item(item)).to be_nil
     end
   end
@@ -139,16 +139,16 @@ describe DocumentoFiscalLib::Nfe do
   describe "#ipi_do_item" do
     it "retorna o hash de informações do imposto IPI" do
       ['IPINT', 'IPITrib'].each do |tipo|
-        item = DocumentoFiscalLib::Conjunto.new({imposto: {IPI: {tipo => {fake: true}}}})
+        item = DfeTaxweb::Conjunto.new({imposto: {IPI: {tipo => {fake: true}}}})
         imposto = subject.ipi_do_item(item)
-        expect(imposto).to be_a(DocumentoFiscalLib::Conjunto)
+        expect(imposto).to be_a(DfeTaxweb::Conjunto)
         expect(imposto.atributo('tipo')).to eq(tipo)
       end
     end
     it "retorna apenas os dados básicos do IPI, caso subgrupo não exista" do
-      item = DocumentoFiscalLib::Conjunto.new({imposto: {IPI: {:IPIFAKE => {fake: true}}}})
+      item = DfeTaxweb::Conjunto.new({imposto: {IPI: {:IPIFAKE => {fake: true}}}})
       imposto = subject.ipi_do_item(item)
-      expect(imposto).to be_a(DocumentoFiscalLib::Conjunto)
+      expect(imposto).to be_a(DfeTaxweb::Conjunto)
       expect(imposto.atributo('tipo')).to be_nil
     end
   end
@@ -156,14 +156,14 @@ describe DocumentoFiscalLib::Nfe do
   describe "#pis_do_item" do
     it "retorna o hash de informações do imposto ICMS" do
       ['PISNT', 'PISAliq', 'PISQtde', 'PISOutr'].each do |tipo|
-        item = DocumentoFiscalLib::Conjunto.new({imposto: {PIS: {tipo => {fake: true}}}})
+        item = DfeTaxweb::Conjunto.new({imposto: {PIS: {tipo => {fake: true}}}})
         imposto = subject.pis_do_item(item)
-        expect(imposto).to be_a(DocumentoFiscalLib::Conjunto)
+        expect(imposto).to be_a(DfeTaxweb::Conjunto)
         expect(imposto.atributo('tipo')).to eq(tipo)
       end
     end
     it "retorna nil quando o icms não existe" do
-      item = DocumentoFiscalLib::Conjunto.new({imposto: {PIS: {:PISFAKE => {fake: true}}}})
+      item = DfeTaxweb::Conjunto.new({imposto: {PIS: {:PISFAKE => {fake: true}}}})
       expect(subject.pis_do_item(item)).to be_nil
     end
   end
@@ -171,14 +171,14 @@ describe DocumentoFiscalLib::Nfe do
   describe "#cofins_do_item" do
     it "retorna o hash de informações do imposto ICMS" do
       ['COFINSAliq', 'COFINSQtde', 'COFINSNT', 'COFINSOutr'].each do |tipo|
-        item = DocumentoFiscalLib::Conjunto.new({imposto: {COFINS: {tipo => {fake: true}}}})
+        item = DfeTaxweb::Conjunto.new({imposto: {COFINS: {tipo => {fake: true}}}})
         imposto = subject.cofins_do_item(item)
-        expect(imposto).to be_a(DocumentoFiscalLib::Conjunto)
+        expect(imposto).to be_a(DfeTaxweb::Conjunto)
         expect(imposto.atributo('tipo')).to eq(tipo)
       end
     end
     it "retorna nil quando o icms não existe" do
-      item = DocumentoFiscalLib::Conjunto.new({imposto: {COFINS: {:COFINSFAKE => {fake: true}}}})
+      item = DfeTaxweb::Conjunto.new({imposto: {COFINS: {:COFINSFAKE => {fake: true}}}})
       expect(subject.cofins_do_item(item)).to be_nil
     end
   end
@@ -202,14 +202,14 @@ describe DocumentoFiscalLib::Nfe do
     it "retorna hash com os atributos documento fiscal do icms" do
       expect(subject).to receive(:situacao_do_icms_cst).exactly(7).and_return(true)
       ['ICMS00', 'ICMS10', 'ICMS20', 'ICMS40', 'ICMS51', 'ICMS70', 'ICMS90'].each do |tipo|
-        item = DocumentoFiscalLib::Conjunto.new({tipo: tipo})
+        item = DfeTaxweb::Conjunto.new({tipo: tipo})
         enquadramento = subject.enquadramento_icms(item)
         expect(enquadramento).to be_a(Hash)
         expect(enquadramento[:dsSigla]).to eq('ICMS')
       end
     end
     it "retorna nil caso o item não exista ou não seja um dos grupos de icms esperados" do
-      item = DocumentoFiscalLib::Conjunto.new({tipo: :fake})
+      item = DfeTaxweb::Conjunto.new({tipo: :fake})
       expect(subject.enquadramento_icms(nil)).to be_nil
       expect(subject.enquadramento_icms(item)).to be_nil
     end
@@ -219,14 +219,14 @@ describe DocumentoFiscalLib::Nfe do
     it "retorna hash com os atributos documento fiscal do icmsst" do
       expect(subject).to receive(:situacao_do_icms_cst).exactly(4).and_return(true)
       ['ICMS10', 'ICMS30', 'ICMS70', 'ICMS90'].each do |tipo|
-        item = DocumentoFiscalLib::Conjunto.new({tipo: tipo})
+        item = DfeTaxweb::Conjunto.new({tipo: tipo})
         enquadramento = subject.enquadramento_icmsst(item)
         expect(enquadramento).to be_a(Hash)
         expect(enquadramento[:dsSigla]).to eq('ST')
       end
     end
     it "retorna nil caso o item não exista ou não seja um dos grupos de icmsst esperados" do
-      item = DocumentoFiscalLib::Conjunto.new({tipo: :fake})
+      item = DfeTaxweb::Conjunto.new({tipo: :fake})
       expect(subject.enquadramento_icmsst(nil)).to be_nil
       expect(subject.enquadramento_icmsst(item)).to be_nil
     end
@@ -236,14 +236,14 @@ describe DocumentoFiscalLib::Nfe do
     it "retorna hash com os atributos documento fiscal do icmsste" do
       expect(subject).to receive(:situacao_do_icms_cst).exactly(1).and_return(true)
       ['ICMS60'].each do |tipo|
-        item = DocumentoFiscalLib::Conjunto.new({tipo: tipo})
+        item = DfeTaxweb::Conjunto.new({tipo: tipo})
         enquadramento = subject.enquadramento_icmsste(item)
         expect(enquadramento).to be_a(Hash)
         expect(enquadramento[:dsSigla]).to eq('STE')
       end
     end
     it "retorna nil caso o item não exista ou não seja um dos grupos de icmsste esperados" do
-      item = DocumentoFiscalLib::Conjunto.new({tipo: :fake})
+      item = DfeTaxweb::Conjunto.new({tipo: :fake})
       expect(subject.enquadramento_icmsste(nil)).to be_nil
       expect(subject.enquadramento_icmsste(item)).to be_nil
     end
@@ -251,7 +251,7 @@ describe DocumentoFiscalLib::Nfe do
 
   describe "#enquadramento_ipi" do
     it "retorna hash com os atributos documento fiscal do ipi" do
-      item = DocumentoFiscalLib::Conjunto.new({fake: true})
+      item = DfeTaxweb::Conjunto.new({fake: true})
       enquadramento = subject.enquadramento_ipi(item)
       expect(enquadramento).to be_a(Hash)
       expect(enquadramento[:dsSigla]).to eq('IPI')
@@ -264,13 +264,13 @@ describe DocumentoFiscalLib::Nfe do
 
   describe "#enquadramento_ii" do
     it "retorna hash com os atributos documento fiscal do ii" do
-      item = DocumentoFiscalLib::Conjunto.new({vII: 1})
+      item = DfeTaxweb::Conjunto.new({vII: 1})
       enquadramento = subject.enquadramento_ii(item)
       expect(enquadramento).to be_a(Hash)
       expect(enquadramento[:dsSigla]).to eq('II')
     end
     it "retorna nil caso o item ii seja enviado em branco ou o atributo VII seja menor ou igual a zero" do
-      item = DocumentoFiscalLib::Conjunto.new({vII: 0})
+      item = DfeTaxweb::Conjunto.new({vII: 0})
       expect(subject.enquadramento_ii(nil)).to be_nil
       expect(subject.enquadramento_ii({})).to be_nil
       expect(subject.enquadramento_ii(item)).to be_nil
@@ -279,7 +279,7 @@ describe DocumentoFiscalLib::Nfe do
 
   describe "#enquadramento_pis" do
     it "retorna hash com os atributos documento fiscal do pis" do
-      item = DocumentoFiscalLib::Conjunto.new({fake: true})
+      item = DfeTaxweb::Conjunto.new({fake: true})
       enquadramento = subject.enquadramento_pis(item)
       expect(enquadramento).to be_a(Hash)
       expect(enquadramento[:dsSigla]).to eq('PIS')
@@ -292,7 +292,7 @@ describe DocumentoFiscalLib::Nfe do
 
   describe "#enquadramento_pisst" do
     it "retorna hash com os atributos documento fiscal do pisst" do
-      item = DocumentoFiscalLib::Conjunto.new({fake: true})
+      item = DfeTaxweb::Conjunto.new({fake: true})
       enquadramento = subject.enquadramento_pisst(item)
       expect(enquadramento).to be_a(Hash)
       expect(enquadramento[:dsSigla]).to eq('PISST')
@@ -305,14 +305,14 @@ describe DocumentoFiscalLib::Nfe do
 
   describe "#enquadramento_cofins" do
     it "retorna hash com os atributos documento fiscal do cofins" do
-      item = DocumentoFiscalLib::Conjunto.new({fake: true})
+      item = DfeTaxweb::Conjunto.new({fake: true})
       enquadramento = subject.enquadramento_cofins(item)
       expect(enquadramento).to be_a(Hash)
       expect(enquadramento[:dsSigla]).to eq('COFINS')
       expect(enquadramento[:situacao]).to eq('T')
     end
     it "retorna situacao N caso o tipo seja COFINSNT" do
-      item = DocumentoFiscalLib::Conjunto.new({tipo: 'COFINSNT'})
+      item = DfeTaxweb::Conjunto.new({tipo: 'COFINSNT'})
       enquadramento = subject.enquadramento_cofins(item)
       expect(enquadramento[:situacao]).to eq('N')
     end
@@ -324,7 +324,7 @@ describe DocumentoFiscalLib::Nfe do
 
   describe "#enquadramento_cofinsst" do
     it "retorna hash com os atributos documento fiscal do cofinsst" do
-      item = DocumentoFiscalLib::Conjunto.new({fake: true})
+      item = DfeTaxweb::Conjunto.new({fake: true})
       enquadramento = subject.enquadramento_cofinsst(item)
       expect(enquadramento).to be_a(Hash)
       expect(enquadramento[:dsSigla]).to eq('COFINSST')
@@ -336,7 +336,7 @@ describe DocumentoFiscalLib::Nfe do
   end
 
   describe "#data_de_emissao" do
-    let(:inf_nfe) {DocumentoFiscalLib::Conjunto.new({ide: {dEmi: nil, dhEmi: nil}})}
+    let(:inf_nfe) {DfeTaxweb::Conjunto.new({ide: {dEmi: nil, dhEmi: nil}})}
     it "retorna data de emissão dEmi" do
       expect(subject).to receive(:inf_nfe).and_return(inf_nfe)
       expect(inf_nfe).to receive(:atributo).with('ide.dEmi').and_return(1)
@@ -351,7 +351,7 @@ describe DocumentoFiscalLib::Nfe do
   end
 
   describe "#tipo_de_operacao" do
-    let(:inf_nfe) {DocumentoFiscalLib::Conjunto.new({emit: {UF: nil}, dest: {UF: nil}})}
+    let(:inf_nfe) {DfeTaxweb::Conjunto.new({emit: {UF: nil}, dest: {UF: nil}})}
     before(:each) {expect(subject).to receive(:inf_nfe).twice.and_return(inf_nfe)}
     it "retorna E caso UF do emitente seja igual a UF do destinatário" do
       expect(inf_nfe).to receive(:atributo).with('emit.UF').and_return('SP')
@@ -552,7 +552,7 @@ describe DocumentoFiscalLib::Nfe do
       expect(subject).to receive(:nfe).exactly(3).and_return(nfe)
       expect(nfe).to receive(:atributo).exactly(3).and_return(nil)
       inf_nfe = subject.send(:inf_nfe)
-      expect(inf_nfe).to be_a(DocumentoFiscalLib::Conjunto)
+      expect(inf_nfe).to be_a(DfeTaxweb::Conjunto)
       expect(inf_nfe.to_h).to eq({})
     end
   end
