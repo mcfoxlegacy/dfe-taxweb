@@ -40,6 +40,7 @@ module DfeTaxweb
           verProc: inf_nfe.atributo('ide.verProc'),
           dhCont: inf_nfe.atributo('ide.dhCont'),
           xJust: inf_nfe.atributo('ide.xJust'),
+          vNF: inf_nfe.atributo('total.ICMSTot.vNF'),
           emitente: emitente,
           destinatario: destinatario,
           retirada: retirada,
