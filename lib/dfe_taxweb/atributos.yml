@@ -281,6 +281,9 @@ documento:
       aplicacao:
         titulo: "aplicacao"
         descricao: ""
+      fabricacao:
+        titulo: "fabricacao"
+        descricao: ""
     enquadramentos:
       titulo: "Enquadramentos"
       descricao: ""
@@ -292,4 +295,7 @@ documento:
     descricao: ""
   naturezaOperacao:
     titulo: "Natureza da Operação"
+    descricao: ""
+  tpCalculo:
+    titulo: "tpCalculo"
     descricao: ""
