@@ -1,0 +1,299 @@
+pessoa: &pessoa
+  cnpj:
+    titulo: "CNPJ"
+    descricao: ""
+  cpf:
+    titulo: "CPF"
+    descricao: ""
+  nome:
+    titulo: "Nome"
+    descricao: ""
+  xFant:
+    titulo: "Nome Fantasia"
+    descricao: ""
+  inscricaoEstadual:
+    titulo: "Inscrição Estadual"
+    descricao: ""
+  IEST:
+    titulo: "Inscrição Estadual ST"
+    descricao: ""
+  inscricaoMunicipal:
+    titulo: "Inscrição Municipal"
+    descricao: ""
+  cdAtividadeEconomica:
+    titulo: "CNAE"
+    descricao: ""
+  contribuinteICMS:
+    titulo: "Contribuinte ICMS?"
+    descricao: ""
+  contribuinteIPI:
+    titulo: "Contribuinte IPI?"
+    descricao: ""
+  contribuinteST:
+    titulo: "Contribuinte ST?"
+    descricao: ""
+  contribuinteISS:
+    titulo: "Contribuinte ISS?"
+    descricao: ""
+  contribuintePIS:
+    titulo: "Contribuinte PIS?"
+    descricao: ""
+  contribuinteCOFINS:
+    titulo: "Contribuinte COFINS?"
+    descricao: ""
+  contribuinteII:
+    titulo: "Contribuinte II?"
+    descricao: ""
+  simplesNac:
+    titulo: "Simples Nacional?"
+    descricao: ""
+  xLgr:
+    titulo: "Logradouro"
+    descricao: ""
+  Nro:
+    titulo: "Número"
+    descricao: ""
+  xCpl:
+    titulo: "Complemento"
+    descricao: ""
+  xBairro:
+    titulo: "Bairro"
+    descricao: ""
+  cdMunicipio:
+    titulo: "Cód. Município"
+    descricao: ""
+  xMun:
+    titulo: "Município"
+    descricao: ""
+  uf:
+    titulo: "UF"
+    descricao: ""
+  cep:
+    titulo: "CEP"
+    descricao: ""
+  cdPais:
+    titulo: "Cód. País"
+    descricao: ""
+  xPais:
+    titulo: "País"
+    descricao: ""
+  fone:
+    titulo: "Telefone"
+    descricao: ""
+documento:
+  idDocFiscal:
+    titulo: "ID Documento Fiscal"
+    descricao: ""
+  natOp:
+    titulo: "Natureza da Operação"
+    descricao: ""
+  tipoPagto:
+    titulo: "Tipo de Pagamento"
+    descricao: ""
+  modelo:
+    titulo: "Modelo"
+    descricao: ""
+  serie:
+    titulo: "Série"
+    descricao: ""
+  numero:
+    titulo: "Número"
+    descricao: ""
+  dtEmissao:
+    titulo: "Data de Emissão"
+    descricao: ""
+  dtES:
+    titulo: ""
+    descricao: ""
+  dtPagto:
+    titulo: ""
+    descricao: ""
+  cMunFG:
+    titulo: ""
+    descricao: ""
+  refNFP:
+    titulo: ""
+    descricao: ""
+  refCTE:
+    titulo: ""
+    descricao: ""
+  refECF:
+    titulo: ""
+    descricao: ""
+  tpImp:
+    titulo: ""
+    descricao: ""
+  tpEmis:
+    titulo: ""
+    descricao: ""
+  cDV:
+    titulo: ""
+    descricao: ""
+  tpAmb:
+    titulo: "Tipo de Ambiente"
+    descricao: ""
+  finNFe:
+    titulo: "Finalidade NF-e"
+    descricao: ""
+  procEmi:
+    titulo: ""
+    descricao: ""
+  verProc:
+    titulo: ""
+    descricao: ""
+  dhCont:
+    titulo: ""
+    descricao: ""
+  xJust:
+    titulo: ""
+    descricao: ""
+  vNF:
+    titulo: "Valor NF-e"
+    descricao: ""
+  emitente:
+    titulo: "Emitente"
+    descricao: ""
+    <<: *pessoa
+    cdAtividadeEconomica:
+      titulo: "CNAE Emitente"
+  destinatario:
+    titulo: "Destinatário"
+    descricao: ""
+    <<: *pessoa
+    cdAtividadeEconomica:
+      titulo: "CNAE Destinatário"
+  retirada:
+    titulo: "Retirada"
+    descricao: ""
+  entrega:
+    titulo: "Entrega"
+    descricao: ""
+  itensDocFiscal:
+    titulo: "Itens do Documento Fiscal"
+    descricao: ""
+    cdCSTICMS:
+      titulo: ""
+      descricao: ""
+    cdCSTIPI:
+      titulo: ""
+      descricao: ""
+    cdCSTPIS:
+      titulo: ""
+      descricao: ""
+    cdCSTCOFINS:
+      titulo: ""
+      descricao: ""
+    cdItemDocFiscal:
+      titulo: ""
+      descricao: ""
+    cdCfop:
+      titulo: ""
+      descricao: ""
+    unidade:
+      titulo: ""
+      descricao: ""
+    qtItemDocFiscal:
+      titulo: ""
+      descricao: ""
+    vlUnitario:
+      titulo: ""
+      descricao: ""
+    vlTotalCI:
+      titulo: ""
+      descricao: ""
+    vlTotal:
+      titulo: ""
+      descricao: ""
+    qtTributariaUnidade:
+      titulo: ""
+      descricao: ""
+    qtTributaria:
+      titulo: ""
+      descricao: ""
+    vUnTrib:
+      titulo: ""
+      descricao: ""
+    vlFrete:
+      titulo: ""
+      descricao: ""
+    vlSeguro:
+      titulo: ""
+      descricao: ""
+    vlDesconto:
+      titulo: ""
+      descricao: ""
+    vlOda:
+      titulo: ""
+      descricao: ""
+    DI:
+      titulo: ""
+      descricao: ""
+    xPed:
+      titulo: ""
+      descricao: ""
+    nItemPed:
+      titulo: ""
+      descricao: ""
+    cdClassificacao:
+      titulo: ""
+      descricao: ""
+    deduzCFOP:
+      titulo: ""
+      descricao: ""
+    deduzCSTICMS:
+      titulo: ""
+      descricao: ""
+    deduzCSTPIS:
+      titulo: ""
+      descricao: ""
+    deduzCSTCOFINS:
+      titulo: ""
+      descricao: ""
+    deduzCSTIPI:
+      titulo: ""
+      descricao: ""
+    prodItem:
+      titulo: "Produto"
+      descricao: ""
+      indTot:
+        titulo: ""
+        descricao: ""
+      cEANTrib:
+        titulo: ""
+        descricao: ""
+      codigo:
+        titulo: ""
+        descricao: ""
+      EAN:
+        titulo: ""
+        descricao: ""
+      descricao:
+        titulo: ""
+        descricao: ""
+      NCM:
+        titulo: ""
+        descricao: ""
+      CEST:
+        titulo: ""
+        descricao: ""
+      exTIPI:
+        titulo: ""
+        descricao: ""
+      cdOrigem:
+        titulo: ""
+        descricao: ""
+      aplicacao:
+        titulo: ""
+        descricao: ""
+    enquadramentos:
+      titulo: "Enquadramentos"
+      descricao: ""
+  tipoOperacao:
+    titulo: "Tipo de Operação"
+    descricao: ""
+  tpDocFiscal:
+    titulo: "Tipo de Documento Fiscal"
+    descricao: ""
+  naturezaOperacao:
+    titulo: "Natureza da Operação"
+    descricao: ""

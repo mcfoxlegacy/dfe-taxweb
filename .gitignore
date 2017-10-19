@@ -26,7 +26,4 @@ build/
 /vendor/bundle
 /lib/bundler/man/
 
-.ruby-version
-.ruby-gemset
-
 .idea
