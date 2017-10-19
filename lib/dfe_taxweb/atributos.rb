@@ -17,9 +17,9 @@ module DfeTaxweb
     end
 
     def colecao
-      @atributos_object ||= to_list.map do |atributo_path|
-        Hash[atributo_path, atributo(atributo_path)]
-      end.compact.reduce(Hash.new, :merge)
+      @atributos_object ||= lista.map do |atributo_path|
+        atributo(atributo_path)
+      end.compact
     end
 
     def atributo(path, conjunto=nil)
