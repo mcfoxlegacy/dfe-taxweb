@@ -12,11 +12,11 @@ module DfeTaxweb
       @atributos_hash = atributos_h['documento'].deep_symbolize_keys || {}
     end
 
-    def to_list
+    def lista
       @atributos_list ||= tree_to_list(@atributos_hash)
     end
 
-    def atributos
+    def colecao
       @atributos_object ||= to_list.map do |atributo_path|
         Hash[atributo_path, atributo(atributo_path)]
       end.compact.reduce(Hash.new, :merge)
