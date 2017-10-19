@@ -103,31 +103,31 @@ documento:
     titulo: "Data de Emissão"
     descricao: ""
   dtES:
-    titulo: ""
+    titulo: "dtES"
     descricao: ""
   dtPagto:
-    titulo: ""
+    titulo: "dtPagto"
     descricao: ""
   cMunFG:
-    titulo: ""
+    titulo: "cMunFG"
     descricao: ""
   refNFP:
-    titulo: ""
+    titulo: "refNFP"
     descricao: ""
   refCTE:
-    titulo: ""
+    titulo: "refCTE"
     descricao: ""
   refECF:
-    titulo: ""
+    titulo: "refECF"
     descricao: ""
   tpImp:
-    titulo: ""
+    titulo: "tpImp"
     descricao: ""
   tpEmis:
-    titulo: ""
+    titulo: "tpEmis"
     descricao: ""
   cDV:
-    titulo: ""
+    titulo: "cDV"
     descricao: ""
   tpAmb:
     titulo: "Tipo de Ambiente"
@@ -136,16 +136,16 @@ documento:
     titulo: "Finalidade NF-e"
     descricao: ""
   procEmi:
-    titulo: ""
+    titulo: "tpAmb"
     descricao: ""
   verProc:
-    titulo: ""
+    titulo: "verProc"
     descricao: ""
   dhCont:
-    titulo: ""
+    titulo: "dhCont"
     descricao: ""
   xJust:
-    titulo: ""
+    titulo: "xJust"
     descricao: ""
   vNF:
     titulo: "Valor NF-e"
@@ -154,14 +154,10 @@ documento:
     titulo: "Emitente"
     descricao: ""
     <<: *pessoa
-    cdAtividadeEconomica:
-      titulo: "CNAE Emitente"
   destinatario:
     titulo: "Destinatário"
     descricao: ""
     <<: *pessoa
-    cdAtividadeEconomica:
-      titulo: "CNAE Destinatário"
   retirada:
     titulo: "Retirada"
     descricao: ""
@@ -172,118 +168,118 @@ documento:
     titulo: "Itens do Documento Fiscal"
     descricao: ""
     cdCSTICMS:
-      titulo: ""
+      titulo: "cdCSTICMS"
       descricao: ""
     cdCSTIPI:
-      titulo: ""
+      titulo: "cdCSTIPI"
       descricao: ""
     cdCSTPIS:
-      titulo: ""
+      titulo: "cdCSTPIS"
       descricao: ""
     cdCSTCOFINS:
-      titulo: ""
+      titulo: "cdCSTCOFINS"
       descricao: ""
     cdItemDocFiscal:
-      titulo: ""
+      titulo: "cdItemDocFiscal"
       descricao: ""
     cdCfop:
-      titulo: ""
+      titulo: "Código CFOP"
       descricao: ""
     unidade:
-      titulo: ""
+      titulo: "unidade"
       descricao: ""
     qtItemDocFiscal:
-      titulo: ""
+      titulo: "qtItemDocFiscal"
       descricao: ""
     vlUnitario:
-      titulo: ""
+      titulo: "vlUnitario"
       descricao: ""
     vlTotalCI:
-      titulo: ""
+      titulo: "vlTotalCI"
       descricao: ""
     vlTotal:
-      titulo: ""
+      titulo: "vlTotal"
       descricao: ""
     qtTributariaUnidade:
-      titulo: ""
+      titulo: "qtTributariaUnidade"
       descricao: ""
     qtTributaria:
-      titulo: ""
+      titulo: "qtTributaria"
       descricao: ""
     vUnTrib:
-      titulo: ""
+      titulo: "vUnTrib"
       descricao: ""
     vlFrete:
-      titulo: ""
+      titulo: "vlFrete"
       descricao: ""
     vlSeguro:
-      titulo: ""
+      titulo: "vlSeguro"
       descricao: ""
     vlDesconto:
-      titulo: ""
+      titulo: "vlDesconto"
       descricao: ""
     vlOda:
-      titulo: ""
+      titulo: "vlOda"
       descricao: ""
     DI:
-      titulo: ""
+      titulo: "DI"
       descricao: ""
     xPed:
-      titulo: ""
+      titulo: "xPed"
       descricao: ""
     nItemPed:
-      titulo: ""
+      titulo: "nItemPed"
       descricao: ""
     cdClassificacao:
-      titulo: ""
+      titulo: "cdClassificacao"
       descricao: ""
     deduzCFOP:
-      titulo: ""
+      titulo: "deduzCFOP"
       descricao: ""
     deduzCSTICMS:
-      titulo: ""
+      titulo: "deduzCSTICMS"
       descricao: ""
     deduzCSTPIS:
-      titulo: ""
+      titulo: "deduzCSTPIS"
       descricao: ""
     deduzCSTCOFINS:
-      titulo: ""
+      titulo: "deduzCSTCOFINS"
       descricao: ""
     deduzCSTIPI:
-      titulo: ""
+      titulo: "deduzCSTIPI"
       descricao: ""
     prodItem:
       titulo: "Produto"
       descricao: ""
       indTot:
-        titulo: ""
+        titulo: "indTot"
         descricao: ""
       cEANTrib:
-        titulo: ""
+        titulo: "cEANTrib"
         descricao: ""
       codigo:
-        titulo: ""
+        titulo: "codigo"
         descricao: ""
       EAN:
-        titulo: ""
+        titulo: "EAN"
         descricao: ""
       descricao:
-        titulo: ""
+        titulo: "descricao"
         descricao: ""
       NCM:
-        titulo: ""
+        titulo: "NCM"
         descricao: ""
       CEST:
-        titulo: ""
+        titulo: "CEST"
         descricao: ""
       exTIPI:
-        titulo: ""
+        titulo: "exTIPI"
         descricao: ""
       cdOrigem:
-        titulo: ""
+        titulo: "cdOrigem"
         descricao: ""
       aplicacao:
-        titulo: ""
+        titulo: "aplicacao"
         descricao: ""
     enquadramentos:
       titulo: "Enquadramentos"

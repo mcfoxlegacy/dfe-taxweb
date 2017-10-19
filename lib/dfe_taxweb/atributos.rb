@@ -17,12 +17,14 @@ module DfeTaxweb
     end
 
     def atributos
-      @atributos_object ||= to_list.map{|atributo_path| Hash[atributo_path, atributo(atributo_path)] }.compact.reduce(Hash.new, :merge)
+      @atributos_object ||= to_list.map do |atributo_path|
+        Hash[atributo_path, atributo(atributo_path)]
+      end.compact.reduce(Hash.new, :merge)
     end
 
     def atributo(path, conjunto=nil)
       conjunto = @atributos_hash if conjunto.nil?
-      valor = path.split(".").inject(conjunto) do |item, key|
+      attrs = path.split(".").inject(conjunto) do |item, key|
         next if item.nil?
         if key =~ /\[\d+\]/
           item[key.sub(/\[\d+\]/, '').to_sym][key[/\[(\d+)\]/, 1].to_i]
@@ -30,29 +32,29 @@ module DfeTaxweb
           item[key.to_sym]
         end
       end
-      DfeTaxweb::Atributo.new(valor)
+      DfeTaxweb::Atributo.new(attrs, path)
     end
 
     private
     def tree_to_list(hash, parent='')
       if hash.is_a?(Array)
-        hash.map{|a| tree_to_list(a, parent)}.flatten.compact
+        hash.map {|a| tree_to_list(a, parent)}.flatten.compact
       elsif hash.is_a?(Hash)
         hash.map do |key, attrs|
           extra_attributes = attrs.except(:titulo, :descricao) #YML
           if extra_attributes.present?
-            normalized_parent = normalize_parent_key(parent,key)
+            normalized_parent = normalize_parent_key(parent, key)
             tree_to_list(extra_attributes, normalized_parent)
           else
             tree_to_list(key, parent)
           end
         end.flatten.compact
       else
-        normalize_parent_key(parent,hash)
+        normalize_parent_key(parent, hash)
       end
     end
 
-    def normalize_parent_key(parent,key)
+    def normalize_parent_key(parent, key)
       parent.present? ? "#{parent}.#{key}" : "#{key}"
     end
   end
