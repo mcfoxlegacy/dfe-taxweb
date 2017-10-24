@@ -60,7 +60,7 @@ pessoa: &pessoa
     titulo: "Bairro"
     descricao: ""
   cdMunicipio:
-    titulo: "Cód. Município"
+    titulo: "Cod Município"
     descricao: ""
   xMun:
     titulo: "Município"
@@ -72,7 +72,7 @@ pessoa: &pessoa
     titulo: "CEP"
     descricao: ""
   cdPais:
-    titulo: "Cód. País"
+    titulo: "Cod País"
     descricao: ""
   xPais:
     titulo: "País"
@@ -82,7 +82,7 @@ pessoa: &pessoa
     descricao: ""
 documento:
   idDocFiscal:
-    titulo: "ID Documento Fiscal"
+    titulo: "ID DocFiscal"
     descricao: ""
   natOp:
     titulo: "Natureza da Operação"
@@ -100,55 +100,55 @@ documento:
     titulo: "Número"
     descricao: ""
   dtEmissao:
-    titulo: "Data de Emissão"
-    descricao: ""
+    titulo: "Data Emissão"
+    descricao: "Data de Emissão do Documento. A maioria dos impostos são calculados baseados nessa data."
   dtES:
-    titulo: "dtES"
+    titulo: "Data Entrada/Saída"
     descricao: ""
   dtPagto:
-    titulo: "dtPagto"
+    titulo: "Data de Pagto/Rec. Despesa"
     descricao: ""
   cMunFG:
-    titulo: "cMunFG"
+    titulo: "Cod Município Fato Gerador ISSQN"
     descricao: ""
   refNFP:
-    titulo: "refNFP"
+    titulo: "Inf NF Produtor Rural Referenciada"
     descricao: ""
   refCTE:
-    titulo: "refCTE"
+    titulo: "Chave CT-e Referenciada"
     descricao: ""
   refECF:
-    titulo: "refECF"
+    titulo: "Inf Cupom Fiscal Referenciado"
     descricao: ""
   tpImp:
-    titulo: "tpImp"
+    titulo: "Tipo Impressão"
     descricao: ""
   tpEmis:
-    titulo: "tpEmis"
+    titulo: "Tipo Emissão"
     descricao: ""
   cDV:
-    titulo: "cDV"
+    titulo: "Cod Dig Verificador"
     descricao: ""
   tpAmb:
-    titulo: "Tipo de Ambiente"
+    titulo: "Tipo Ambiente"
     descricao: ""
   finNFe:
     titulo: "Finalidade NF-e"
     descricao: ""
   procEmi:
-    titulo: "tpAmb"
+    titulo: "Processo Emissão"
     descricao: ""
   verProc:
-    titulo: "verProc"
+    titulo: "Versão Processo Emissão"
     descricao: ""
   dhCont:
-    titulo: "dhCont"
+    titulo: "Dt/Hr Entrada Contingência"
     descricao: ""
   xJust:
-    titulo: "xJust"
+    titulo: "Justif Entrada Contingência"
     descricao: ""
   vNF:
-    titulo: "Valor NF-e"
+    titulo: "Vlr NF-e"
     descricao: ""
   emitente:
     titulo: "Emitente"
@@ -168,94 +168,94 @@ documento:
     titulo: "Item"
     descricao: ""
     cdCSTICMS:
-      titulo: "cdCSTICMS"
+      titulo: "Cod CST ICMS"
       descricao: ""
     cdCSTIPI:
-      titulo: "cdCSTIPI"
+      titulo: "Cod CST IPI"
       descricao: ""
     cdCSTPIS:
-      titulo: "cdCSTPIS"
+      titulo: "Cod CST PIS"
       descricao: ""
     cdCSTCOFINS:
-      titulo: "cdCSTCOFINS"
+      titulo: "Cod CST COFINS"
       descricao: ""
     cdItemDocFiscal:
-      titulo: "cdItemDocFiscal"
+      titulo: "Cod Item DocFiscal"
       descricao: ""
     cdCfop:
-      titulo: "Código CFOP"
+      titulo: "Cod CFOP"
       descricao: ""
     unidade:
-      titulo: "unidade"
+      titulo: "Unidade"
       descricao: ""
     qtItemDocFiscal:
-      titulo: "qtItemDocFiscal"
+      titulo: "Qtde Itens DocFiscal"
       descricao: ""
     vlUnitario:
-      titulo: "vlUnitario"
+      titulo: "Vlr Unitário"
       descricao: ""
     vlTotalCI:
-      titulo: "vlTotalCI"
+      titulo: "Vlr Total CI"
       descricao: ""
     vlTotal:
-      titulo: "vlTotal"
+      titulo: "Vlr Total"
       descricao: ""
     qtTributariaUnidade:
-      titulo: "qtTributariaUnidade"
+      titulo: "Qtde Trib Unidade"
       descricao: ""
     qtTributaria:
-      titulo: "qtTributaria"
+      titulo: "Qtde Trib"
       descricao: ""
     vUnTrib:
-      titulo: "vUnTrib"
+      titulo: "Vlr Unid Trib"
       descricao: ""
     vlFrete:
-      titulo: "vlFrete"
+      titulo: "Vlr Frete"
       descricao: ""
     vlSeguro:
-      titulo: "vlSeguro"
+      titulo: "Vlr Seguro"
       descricao: ""
     vlDesconto:
-      titulo: "vlDesconto"
+      titulo: "Vlr Desconto"
       descricao: ""
     vlOda:
-      titulo: "vlOda"
+      titulo: "Vlr Oda"
       descricao: ""
     DI:
       titulo: "DI"
       descricao: ""
     xPed:
-      titulo: "xPed"
+      titulo: "Num Pedido Compra"
       descricao: ""
     nItemPed:
-      titulo: "nItemPed"
+      titulo: "Item Pedido Compra"
       descricao: ""
     cdClassificacao:
-      titulo: "cdClassificacao"
+      titulo: "Cod. Classificacao"
       descricao: ""
     deduzCFOP:
-      titulo: "deduzCFOP"
+      titulo: "Deduz CFOP?"
       descricao: ""
     deduzCSTICMS:
-      titulo: "deduzCSTICMS"
+      titulo: "Deduz CST ICMS?"
       descricao: ""
     deduzCSTPIS:
-      titulo: "deduzCSTPIS"
+      titulo: "Deduz CST PIS?"
       descricao: ""
     deduzCSTCOFINS:
-      titulo: "deduzCSTCOFINS"
+      titulo: "Deduz CST COFINS?"
       descricao: ""
     deduzCSTIPI:
-      titulo: "deduzCSTIPI"
+      titulo: "Deduz CST IPI?"
       descricao: ""
     prodItem:
-      titulo: "Item"
+      titulo: "Produto"
       descricao: ""
       indTot:
-        titulo: "indTot"
+        titulo: "Vlr Item consta no Vlr Total?"
         descricao: ""
       cEANTrib:
-        titulo: "cEANTrib"
+        titulo: "Cod EAN Trib (GTIN)"
         descricao: ""
       codigo:
         titulo: "codigo"
@@ -264,7 +264,7 @@ documento:
         titulo: "EAN"
         descricao: ""
       descricao:
-        titulo: "descricao"
+        titulo: "Descrição"
         descricao: ""
       NCM:
         titulo: "NCM"
@@ -273,95 +273,95 @@ documento:
         titulo: "CEST"
         descricao: ""
       exTIPI:
-        titulo: "exTIPI"
+        titulo: "EX da TIPI"
         descricao: ""
       cdOrigem:
-        titulo: "cdOrigem"
+        titulo: "Cod Origem"
         descricao: ""
       aplicacao:
-        titulo: "aplicacao"
+        titulo: "Aplicação"
         descricao: ""
       fabricacao:
-        titulo: "fabricacao"
+        titulo: "Fabricação"
         descricao: ""
     enquadramentos:
       titulo: "Enquadramentos"
       descricao: ""
       cdItem:
-        titulo: "cdItem"
+        titulo: "Cod Item"
         descricao: ""
       dsSigla:
-        titulo: "dsSigla"
+        titulo: "Ds Sigla"
         descricao: ""
       responsavel:
-        titulo: "responsavel"
+        titulo: "Responsável"
         descricao: ""
       situacao:
-        titulo: "situacao"
+        titulo: "Situação"
         descricao: ""
       tpEnquadramento:
-        titulo: "tpEnquadramento"
+        titulo: "Tipo Enquadramento"
         descricao: ""
       vlAliquota:
-        titulo: "vlAliquota"
+        titulo: "Vlr Alíquota"
         descricao: ""
       vlBase:
-        titulo: "vlBase"
+        titulo: "Vlr Base"
         descricao: ""
       vlImposto:
-        titulo: "vlImposto"
+        titulo: "Vlr Imposto"
         descricao: ""
       vlImpostoPrecisaoInterna:
-        titulo: "vlImpostoPrecisaoInterna"
+        titulo: "Vlr Imposto Precisão Interna"
         descricao: ""
       vlIsento:
-        titulo: "vlIsento"
+        titulo: "Vlr Isento"
         descricao: ""
       vlOutros:
-        titulo: "vlOutros"
+        titulo: "Vlr Outros"
         descricao: ""
       vlTributavel:
-        titulo: "vlTributavel"
+        titulo: "Vlr Tributável"
         descricao: ""
     enquadramentosConclusivos:
       titulo: "Enquadramentos Conclusivos"
       descricao: ""
       cdItemDocFiscal:
-        titulo: "cdItemDocFiscal"
+        titulo: "Cod Item DocFiscal"
         descricao: ""
       codigo:
-        titulo: "codigo"
+        titulo: "Código"
         descricao: ""
       descricao:
-        titulo: "descricao"
+        titulo: "Descricão"
         descricao: ""
       fimVigencia:
-        titulo: "fimVigencia"
+        titulo: "Fim Vigência"
         descricao: ""
       idConta:
-        titulo: "idConta"
+        titulo: "ID Conta"
         descricao: ""
       idRegra:
-        titulo: "idRegra"
+        titulo: "ID Regra"
         descricao: ""
       inicioVigencia:
-        titulo: "inicioVigencia"
+        titulo: "Início Vigência"
         descricao: ""
       sigla:
-        titulo: "sigla"
+        titulo: "Sigla"
         descricao: ""
       status:
-        titulo: "status"
+        titulo: "Status"
         descricao: ""
   tipoOperacao:
     titulo: "Tipo de Operação"
     descricao: ""
   tpDocFiscal:
-    titulo: "Tipo de Documento Fiscal"
+    titulo: "Tipo DocFiscal"
     descricao: ""
   naturezaOperacao:
-    titulo: "Natureza da Operação"
+    titulo: "Natureza Operação"
     descricao: ""
   tpCalculo:
-    titulo: "tpCalculo"
+    titulo: "Tipo Cálculo"
     descricao: ""

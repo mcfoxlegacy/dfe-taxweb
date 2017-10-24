@@ -5,9 +5,14 @@ module DfeTaxweb
 
     def initialize(atributos, caminho='')
       @caminho = caminho
+      pai_titulo = caminho =~ /\./ ? DfeTaxweb.atributo(caminho[0, caminho.rindex('.')]).titulo : ''
       atributos.each do |k, v|
         begin
-          self.send(:"#{k}=", v)
+          if k.to_s=='titulo'
+            self.titulo = "#{pai_titulo} #{v}"
+          else
+            self.send(:"#{k}=", v)
+          end
         rescue NoMethodError => e
           # self.class.send(:attr_accessor, k)
           # retry
