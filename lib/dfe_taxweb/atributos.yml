@@ -85,7 +85,7 @@ documento:
     titulo: "ID DocFiscal"
     descricao: ""
   natOp:
-    titulo: "Natureza da Operação"
+    titulo: "Natureza Operação"
     descricao: ""
   tipoPagto:
     titulo: "Tipo de Pagamento"
@@ -360,7 +360,7 @@ documento:
     titulo: "Tipo DocFiscal"
     descricao: ""
   naturezaOperacao:
-    titulo: "Natureza Operação"
+    titulo: "Cod Natureza Operação"
     descricao: ""
   tpCalculo:
     titulo: "Tipo Cálculo"
