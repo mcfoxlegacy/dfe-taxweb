@@ -165,7 +165,7 @@ documento:
     titulo: "Entrega"
     descricao: ""
   itensDocFiscal:
-    titulo: "Itens do Documento Fiscal"
+    titulo: "Item"
     descricao: ""
     cdCSTICMS:
       titulo: "cdCSTICMS"
@@ -249,7 +249,7 @@ documento:
       titulo: "deduzCSTIPI"
       descricao: ""
     prodItem:
-      titulo: "Produto"
+      titulo: "Item"
       descricao: ""
       indTot:
         titulo: "indTot"
@@ -287,6 +287,72 @@ documento:
     enquadramentos:
       titulo: "Enquadramentos"
       descricao: ""
+      cdItem:
+        titulo: "cdItem"
+        descricao: ""
+      dsSigla:
+        titulo: "dsSigla"
+        descricao: ""
+      responsavel:
+        titulo: "responsavel"
+        descricao: ""
+      situacao:
+        titulo: "situacao"
+        descricao: ""
+      tpEnquadramento:
+        titulo: "tpEnquadramento"
+        descricao: ""
+      vlAliquota:
+        titulo: "vlAliquota"
+        descricao: ""
+      vlBase:
+        titulo: "vlBase"
+        descricao: ""
+      vlImposto:
+        titulo: "vlImposto"
+        descricao: ""
+      vlImpostoPrecisaoInterna:
+        titulo: "vlImpostoPrecisaoInterna"
+        descricao: ""
+      vlIsento:
+        titulo: "vlIsento"
+        descricao: ""
+      vlOutros:
+        titulo: "vlOutros"
+        descricao: ""
+      vlTributavel:
+        titulo: "vlTributavel"
+        descricao: ""
+    enquadramentosConclusivos:
+      titulo: "Enquadramentos Conclusivos"
+      descricao: ""
+      cdItemDocFiscal:
+        titulo: "cdItemDocFiscal"
+        descricao: ""
+      codigo:
+        titulo: "codigo"
+        descricao: ""
+      descricao:
+        titulo: "descricao"
+        descricao: ""
+      fimVigencia:
+        titulo: "fimVigencia"
+        descricao: ""
+      idConta:
+        titulo: "idConta"
+        descricao: ""
+      idRegra:
+        titulo: "idRegra"
+        descricao: ""
+      inicioVigencia:
+        titulo: "inicioVigencia"
+        descricao: ""
+      sigla:
+        titulo: "sigla"
+        descricao: ""
+      status:
+        titulo: "status"
+        descricao: ""
   tipoOperacao:
     titulo: "Tipo de Operação"
     descricao: ""
