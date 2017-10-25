@@ -9,7 +9,7 @@ module DfeTaxweb
 
     def initialize
       atributos_h = YAML.load(File.read(File.join(__dir__, 'atributos.yml')))
-      @atributos_hash = atributos_h['documento'].deep_symbolize_keys || {}
+      @atributos_hash ||= atributos_h['documento'].deep_symbolize_keys || {}
     end
 
     def lista
