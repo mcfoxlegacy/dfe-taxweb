@@ -29,4 +29,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '~> 3.6'
   spec.add_development_dependency 'simplecov', '~> 0.14'
   spec.add_development_dependency 'codacy-coverage', '~> 1.1'
+  spec.add_development_dependency 'rspec_junit_formatter', '~> 0.1'
 end

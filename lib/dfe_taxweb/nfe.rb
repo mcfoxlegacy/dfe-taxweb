@@ -41,6 +41,7 @@ module DfeTaxweb
           dhCont: inf_nfe.atributo('ide.dhCont'),
           xJust: inf_nfe.atributo('ide.xJust'),
           vNF: inf_nfe.atributo('total.ICMSTot.vNF'),
+          indConsumidorFinal: (inf_nfe.atributo('ide.indFinal') == '1' ? 'S' : 'N'),
           emitente: emitente,
           destinatario: destinatario,
           retirada: retirada,
@@ -55,6 +56,8 @@ module DfeTaxweb
     def emitente
       emit = inf_nfe.atributo('emit')
       endereco = endereco(emit.atributo('enderEmit'))
+      cnae = emit.atributo('CNAE')
+      contribuinte_ipi = cnae && cnae =~ /^[123]/ ? 'S' : 'N'
       {
           cnpj: emit.atributo('CNPJ'),
           cpf: emit.atributo('CPF'),
@@ -63,9 +66,9 @@ module DfeTaxweb
           inscricaoEstadual: emit.atributo('IE'),
           IEST: emit.atributo('IEST'),
           inscricaoMunicipal: emit.atributo('IM'),
-          cdAtividadeEconomica: emit.atributo('CNAE'),
+          cdAtividadeEconomica: cnae,
           contribuinteICMS: emit.atributo('IE') ? 'S' : 'N',
-          # contribuinteIPI: emit.atributo('IE') ? 'S' : 'N',
+          contribuinteIPI: contribuinte_ipi,
           contribuinteST: emit.atributo('IEST') ? 'S' : 'N',
           contribuinteISS: emit.atributo('IM') ? 'S' : 'N',
           contribuintePIS: emit.atributo('CNPJ') ? 'S' : 'N',
@@ -83,8 +86,7 @@ module DfeTaxweb
           cpf: dest.atributo('CPF'),
           nome: dest.atributo('xNome'),
           inscricaoEstadual: dest.atributo('IE'),
-          contribuinteICMS: dest.atributo('IE') ? 'S' : 'N',
-          # contribuinteIPI: dest.atributo('IE') ? 'S' : 'N',
+          contribuinteICMS: dest_contribuinte_icms?,
           contribuintePIS: dest.atributo('CNPJ') ? 'S' : 'N',
           contribuinteCOFINS: dest.atributo('CNPJ') ? 'S' : 'N',
           contribuinteII: 'S',
@@ -447,6 +449,17 @@ module DfeTaxweb
           item.atributo('imposto.PISST.qBCProd') ||
           item.atributo('imposto.PIS.PISOutr.qBCProd') ||
           item.atributo('prod.qTrib')
+    end
+
+    def dest_contribuinte_icms?
+      case inf_nfe.atributo('ide.indIEDest').to_s
+        when '1'
+          'S'
+        when '2', '9'
+          'N'
+        else
+          !!inf_nfe.atributo('dest.IE') ? 'S' : 'N'
+      end
     end
 
     private
