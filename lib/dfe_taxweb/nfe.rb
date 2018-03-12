@@ -49,18 +49,15 @@ module DfeTaxweb
           itensDocFiscal: itens,
           tipoOperacao: tipo_de_operacao,
           tpDocFiscal: 'FT',
-          naturezaOperacao: '002',
+          naturezaOperacao: '002'
       }.compact
     end
 
     def emitente
       emit = inf_nfe.atributo('emit')
       endereco = endereco(emit.atributo('enderEmit'))
-
       cnae = emit.atributo('CNAE')
-      contribuinte_ipi = nil
-      contribuinte_ipi = 'S' if cnae.starts_with?('1') || cnae.starts_with?('2') || cnae.starts_with?('3')
-
+      contribuinte_ipi = cnae && cnae =~ /^[123]/ ? 'S' : 'N'
       {
           cnpj: emit.atributo('CNPJ'),
           cpf: emit.atributo('CPF'),
@@ -84,25 +81,12 @@ module DfeTaxweb
     def destinatario
       dest = inf_nfe.atributo('dest')
       endereco = endereco(dest.atributo('enderDest'))
-
-      # Logica para deducao se o Destinatário é contribuinte de ICMS
-      case inf_nfe.atributo('ide.indIEDest')
-        when '1'
-          contribuinte_icms = 'S'
-        when '2'
-          contribuinte_icms =  'N'
-        when '9'
-          contribuinte_icms =  'N'
-        else
-          contribuinte_icms = dest.atributo('IE') ? 'S' : 'N'
-      end
-
       {
           cnpj: dest.atributo('CNPJ'),
           cpf: dest.atributo('CPF'),
           nome: dest.atributo('xNome'),
           inscricaoEstadual: dest.atributo('IE'),
-          contribuinteICMS: contribuinte_icms,
+          contribuinteICMS: dest_contribuinte_icms?,
           contribuintePIS: dest.atributo('CNPJ') ? 'S' : 'N',
           contribuinteCOFINS: dest.atributo('CNPJ') ? 'S' : 'N',
           contribuinteII: 'S',
@@ -465,6 +449,17 @@ module DfeTaxweb
           item.atributo('imposto.PISST.qBCProd') ||
           item.atributo('imposto.PIS.PISOutr.qBCProd') ||
           item.atributo('prod.qTrib')
+    end
+
+    def dest_contribuinte_icms?
+      case inf_nfe.atributo('ide.indIEDest').to_s
+        when '1'
+          'S'
+        when '2', '9'
+          'N'
+        else
+          !!inf_nfe.atributo('dest.IE') ? 'S' : 'N'
+      end
     end
 
     private
