@@ -41,6 +41,7 @@ module DfeTaxweb
           dhCont: inf_nfe.atributo('ide.dhCont'),
           xJust: inf_nfe.atributo('ide.xJust'),
           vNF: inf_nfe.atributo('total.ICMSTot.vNF'),
+          indConsumidorFinal: (inf_nfe.atributo('ide.indFinal') == '1' ? 'S' : 'N'),
           emitente: emitente,
           destinatario: destinatario,
           retirada: retirada,
@@ -48,13 +49,18 @@ module DfeTaxweb
           itensDocFiscal: itens,
           tipoOperacao: tipo_de_operacao,
           tpDocFiscal: 'FT',
-          naturezaOperacao: '002'
+          naturezaOperacao: '002',
       }.compact
     end
 
     def emitente
       emit = inf_nfe.atributo('emit')
       endereco = endereco(emit.atributo('enderEmit'))
+
+      cnae = emit.atributo('CNAE')
+      contribuinte_ipi = nil
+      contribuinte_ipi = 'S' if cnae.starts_with?('1') || cnae.starts_with?('2') || cnae.starts_with?('3')
+
       {
           cnpj: emit.atributo('CNPJ'),
           cpf: emit.atributo('CPF'),
@@ -63,9 +69,9 @@ module DfeTaxweb
           inscricaoEstadual: emit.atributo('IE'),
           IEST: emit.atributo('IEST'),
           inscricaoMunicipal: emit.atributo('IM'),
-          cdAtividadeEconomica: emit.atributo('CNAE'),
+          cdAtividadeEconomica: cnae,
           contribuinteICMS: emit.atributo('IE') ? 'S' : 'N',
-          # contribuinteIPI: emit.atributo('IE') ? 'S' : 'N',
+          contribuinteIPI: contribuinte_ipi,
           contribuinteST: emit.atributo('IEST') ? 'S' : 'N',
           contribuinteISS: emit.atributo('IM') ? 'S' : 'N',
           contribuintePIS: emit.atributo('CNPJ') ? 'S' : 'N',
@@ -78,13 +84,25 @@ module DfeTaxweb
     def destinatario
       dest = inf_nfe.atributo('dest')
       endereco = endereco(dest.atributo('enderDest'))
+
+      # Logica para deducao se o Destinatário é contribuinte de ICMS
+      case inf_nfe.atributo('ide.indIEDest')
+        when '1'
+          contribuinte_icms = 'S'
+        when '2'
+          contribuinte_icms =  'N'
+        when '9'
+          contribuinte_icms =  'N'
+        else
+          contribuinte_icms = dest.atributo('IE') ? 'S' : 'N',
+      end
+
       {
           cnpj: dest.atributo('CNPJ'),
           cpf: dest.atributo('CPF'),
           nome: dest.atributo('xNome'),
           inscricaoEstadual: dest.atributo('IE'),
-          contribuinteICMS: dest.atributo('IE') ? 'S' : 'N',
-          # contribuinteIPI: dest.atributo('IE') ? 'S' : 'N',
+          contribuinteICMS: contribuinte_icms,
           contribuintePIS: dest.atributo('CNPJ') ? 'S' : 'N',
           contribuinteCOFINS: dest.atributo('CNPJ') ? 'S' : 'N',
           contribuinteII: 'S',
