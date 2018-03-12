@@ -94,7 +94,7 @@ module DfeTaxweb
         when '9'
           contribuinte_icms =  'N'
         else
-          contribuinte_icms = dest.atributo('IE') ? 'S' : 'N',
+          contribuinte_icms = dest.atributo('IE') ? 'S' : 'N'
       end
 
       {
