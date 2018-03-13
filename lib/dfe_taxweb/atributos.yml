@@ -82,8 +82,8 @@ pessoa: &pessoa
     descricao: ""
 documento:
   idDocFiscal:
-    titulo: "ID DocFiscal"
-    descricao: ""
+    titulo: "Nota Fiscal - Número"
+    descricao: "Qual o numero da nota fiscal"
   natOp:
     titulo: "Natureza Operação"
     descricao: ""
@@ -166,37 +166,37 @@ documento:
     descricao: ""
   indConsumidorFinal:
     titulo: "Destinatário é consumidor final"
-    descricao: "Indica se o destinatário desse documento fislca é um consumidor final"
+    descricao: "Indica se o destinatário desse documento fiscal é um consumidor final"
   itensDocFiscal:
     titulo: "Item"
     descricao: ""
     cdCSTICMS:
-      titulo: "Cod CST ICMS"
+      titulo: "CST - ICMS"
       descricao: ""
     cdCSTIPI:
-      titulo: "Cod CST IPI"
+      titulo: "CST - IPI"
       descricao: ""
     cdCSTPIS:
-      titulo: "Cod CST PIS"
+      titulo: "CST - PIS"
       descricao: ""
     cdCSTCOFINS:
-      titulo: "Cod CST COFINS"
+      titulo: "CST - COFINS"
       descricao: ""
     cdItemDocFiscal:
       titulo: "Cod Item DocFiscal"
       descricao: ""
     cdCfop:
-      titulo: "Cod CFOP"
-      descricao: ""
+      titulo: "CFOP"
+      descricao: "CFOP da operação"
     unidade:
       titulo: "Unidade"
       descricao: ""
     qtItemDocFiscal:
-      titulo: "Qtde Itens DocFiscal"
-      descricao: ""
+      titulo: "Quantidade de item fiscal"
+      descricao: "Quantidade de item que possui a nota fiscal"
     vlUnitario:
-      titulo: "Vlr Unitário"
-      descricao: ""
+      titulo: "Volume Unitário"
+      descricao: "Valor unitário de cada item"
     vlTotalCI:
       titulo: "Vlr Total CI"
       descricao: ""
@@ -204,22 +204,22 @@ documento:
       titulo: "Vlr Total"
       descricao: ""
     qtTributariaUnidade:
-      titulo: "Qtde Trib Unidade"
-      descricao: ""
+      titulo: "Quantidade de item tributados"
+      descricao: "Quantidade de produto que está sendo tributado (unidade ou pac)"
     qtTributaria:
       titulo: "Qtde Trib"
       descricao: ""
     vUnTrib:
-      titulo: "Vlr Unid Trib"
+      titulo: "Valor Unitário Tributado"
       descricao: ""
     vlFrete:
-      titulo: "Vlr Frete"
+      titulo: "Valor do Frete"
       descricao: ""
     vlSeguro:
-      titulo: "Vlr Seguro"
+      titulo: "Valor do Seguro"
       descricao: ""
     vlDesconto:
-      titulo: "Vlr Desconto"
+      titulo: "Valor do desconto"
       descricao: ""
     vlOda:
       titulo: "Vlr Oda"
@@ -237,19 +237,19 @@ documento:
       titulo: "Cod. Classificacao"
       descricao: ""
     deduzCFOP:
-      titulo: "Deduz CFOP?"
+      titulo: "Dudução de CFOP"
       descricao: ""
     deduzCSTICMS:
-      titulo: "Deduz CST ICMS?"
+      titulo: "Dudução de ICMS"
       descricao: ""
     deduzCSTPIS:
-      titulo: "Deduz CST PIS?"
+      titulo: "Dudução de PIS"
       descricao: ""
     deduzCSTCOFINS:
-      titulo: "Deduz CST COFINS?"
+      titulo: "Dudução de COFINS"
       descricao: ""
     deduzCSTIPI:
-      titulo: "Deduz CST IPI?"
+      titulo: "Dudução de IPI"
       descricao: ""
     prodItem:
       titulo: "Produto"
@@ -271,22 +271,22 @@ documento:
         descricao: ""
       NCM:
         titulo: "NCM"
-        descricao: ""
+        descricao: "Nomenclatura do Mercosul"
       CEST:
         titulo: "CEST"
-        descricao: ""
+        descricao: "CEST da operação"
       exTIPI:
         titulo: "EX da TIPI"
         descricao: ""
       cdOrigem:
-        titulo: "Cod Origem"
-        descricao: ""
+        titulo: "CD ORIGEM"
+        descricao: "Importado ou nacional "
       aplicacao:
         titulo: "Aplicação"
         descricao: ""
       fabricacao:
-        titulo: "Fabricação"
-        descricao: ""
+        titulo: "Fabricação do Produto"
+        descricao: "Compra de terceiro ou industrializa"
     enquadramentos:
       titulo: "Enquadramentos"
       descricao: ""
@@ -294,11 +294,11 @@ documento:
         titulo: "Cod Item"
         descricao: ""
       dsSigla:
-        titulo: "Ds Sigla"
-        descricao: ""
+        titulo: "Sigla do imposto"
+        descricao: "Tipo de tributo que está sendo enquadrado"
       responsavel:
-        titulo: "Responsável"
-        descricao: ""
+        titulo: "Enquadramento do responsavel"
+        descricao: "Responsavel do imposto"
       situacao:
         titulo: "Situação"
         descricao: ""
@@ -306,25 +306,25 @@ documento:
         titulo: "Tipo Enquadramento"
         descricao: ""
       vlAliquota:
-        titulo: "Vlr Alíquota"
-        descricao: ""
+        titulo: "Vl. Aliquota"
+        descricao: "Qual a alíquota que está sendo enadradada"
       vlBase:
-        titulo: "Vlr Base"
-        descricao: ""
+        titulo: "Base de calculo"
+        descricao: "O Valor da base de calculo que será calculados os impostos"
       vlImposto:
-        titulo: "Vlr Imposto"
-        descricao: ""
+        titulo: "Valor do imposto a ser aplicado"
+        descricao: "Qual o valor que deverá ser aplicado o imposto"
       vlImpostoPrecisaoInterna:
         titulo: "Vlr Imposto Precisão Interna"
         descricao: ""
       vlIsento:
-        titulo: "Vlr Isento"
+        titulo: "Enquadramento da Isenção"
         descricao: ""
       vlOutros:
-        titulo: "Vlr Outros"
+        titulo: "Enquadramento de outros"
         descricao: ""
       vlTributavel:
-        titulo: "Vlr Tributável"
+        titulo: "Enquadramento do valor total"
         descricao: ""
     enquadramentosConclusivos:
       titulo: "Enquadramentos Conclusivos"
@@ -358,13 +358,13 @@ documento:
         descricao: ""
   tipoOperacao:
     titulo: "Tipo de Operação"
-    descricao: ""
+    descricao: "Operação interna/interestadual"
   tpDocFiscal:
     titulo: "Tipo DocFiscal"
     descricao: ""
   naturezaOperacao:
     titulo: "Cod Natureza Operação"
-    descricao: ""
+    descricao: "Entrada/saída/transferência "
   tpCalculo:
     titulo: "Tipo Cálculo"
     descricao: ""
