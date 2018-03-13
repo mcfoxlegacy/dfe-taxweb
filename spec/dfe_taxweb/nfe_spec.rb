@@ -590,6 +590,7 @@ describe DfeTaxweb::Nfe do
     it "é contribuinte caso cnae comece com 1, 2 ou 3" do
       expect(subject.contribuinte_ipi?('1099-6/03')).to eq('S')
       expect(subject.contribuinte_ipi?('2710-4/02')).to eq('S')
+      expect(subject.contribuinte_ipi?('3102-1/00')).to eq('S')
     end
     it "não contribuinte caso cnae não comece com 1, 2 ou 3" do
       expect(subject.contribuinte_ipi?('5111-1/00')).to eq('N')
