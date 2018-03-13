@@ -164,6 +164,9 @@ documento:
   entrega:
     titulo: "Entrega"
     descricao: ""
+  indConsumidorFinal:
+    titulo: "Destinatário é consumidor final"
+    descricao: "Indica se o destinatário desse documento fislca é um consumidor final"
   itensDocFiscal:
     titulo: "Item"
     descricao: ""
