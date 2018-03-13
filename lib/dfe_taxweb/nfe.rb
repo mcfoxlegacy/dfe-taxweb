@@ -462,10 +462,13 @@ module DfeTaxweb
     end
 
     def contribuinte_ipi?(cnae=nil)
-      if cnae.present? && cnae =~ /^\d/
-        cnae =~ /^[123]/ ? 'S' : 'N'
-      else
-        nil
+      case cnae
+        when /^[123]/
+          'S'
+        when /^\d/
+          'N'
+        else
+          nil
       end
     end
 

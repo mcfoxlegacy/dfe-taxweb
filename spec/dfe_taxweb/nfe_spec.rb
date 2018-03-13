@@ -598,6 +598,7 @@ describe DfeTaxweb::Nfe do
     end
     it "retorna nil caso não seja informado um cnae" do
       expect(subject.contribuinte_ipi?(nil)).to be_nil
+      expect(subject.contribuinte_ipi?('')).to be_nil
       expect(subject.contribuinte_ipi?('ABC')).to be_nil
     end
   end
