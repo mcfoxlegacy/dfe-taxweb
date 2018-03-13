@@ -45,14 +45,14 @@ describe DfeTaxweb::Nfe do
   describe "#emitente" do
     it "retorna o hash de emitente" do
       expect(subject).to receive(:endereco).and_return({})
-      expect(subject.emitente.keys.sort).to eq([:contribuinteCOFINS, :contribuinteICMS, :contribuinteII, :contribuinteIPI, :contribuinteISS, :contribuintePIS, :contribuinteST, :simplesNac].sort)
+      expect(subject.emitente).to be_a(Hash)
     end
   end
 
   describe "#destinatario" do
     it "retorna o hash de destinatario" do
       expect(subject).to receive(:endereco).and_return({})
-      expect(subject.destinatario.keys.sort).to eq([:contribuinteCOFINS, :contribuinteICMS, :contribuinteII, :contribuintePIS].sort)
+      expect(subject.emitente).to be_a(Hash)
     end
   end
 
@@ -583,6 +583,21 @@ describe DfeTaxweb::Nfe do
         expect(inf_nfe).to receive(:atributo).with('dest.IE').and_return(nil)
         expect(subject.dest_contribuinte_icms?).to eq('N')
       end
+    end
+  end
+
+  describe "#contribuinte_ipi?" do
+    it "é contribuinte caso cnae comece com 1, 2 ou 3" do
+      expect(subject.contribuinte_ipi?('1099-6/03')).to eq('S')
+      expect(subject.contribuinte_ipi?('2710-4/02')).to eq('S')
+    end
+    it "não contribuinte caso cnae não comece com 1, 2 ou 3" do
+      expect(subject.contribuinte_ipi?('5111-1/00')).to eq('N')
+      expect(subject.contribuinte_ipi?('0729-4/05')).to eq('N')
+    end
+    it "retorna nil caso não seja informado um cnae" do
+      expect(subject.contribuinte_ipi?(nil)).to be_nil
+      expect(subject.contribuinte_ipi?('ABC')).to be_nil
     end
   end
 

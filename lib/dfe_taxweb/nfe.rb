@@ -57,7 +57,6 @@ module DfeTaxweb
       emit = inf_nfe.atributo('emit')
       endereco = endereco(emit.atributo('enderEmit'))
       cnae = emit.atributo('CNAE')
-      contribuinte_ipi = cnae && cnae =~ /^[123]/ ? 'S' : 'N'
       {
           cnpj: emit.atributo('CNPJ'),
           cpf: emit.atributo('CPF'),
@@ -68,7 +67,7 @@ module DfeTaxweb
           inscricaoMunicipal: emit.atributo('IM'),
           cdAtividadeEconomica: cnae,
           contribuinteICMS: emit.atributo('IE') ? 'S' : 'N',
-          contribuinteIPI: contribuinte_ipi,
+          contribuinteIPI: contribuinte_ipi?(cnae),
           contribuinteST: emit.atributo('IEST') ? 'S' : 'N',
           contribuinteISS: emit.atributo('IM') ? 'S' : 'N',
           contribuintePIS: emit.atributo('CNPJ') ? 'S' : 'N',
@@ -459,6 +458,14 @@ module DfeTaxweb
           'N'
         else
           !!inf_nfe.atributo('dest.IE') ? 'S' : 'N'
+      end
+    end
+
+    def contribuinte_ipi?(cnae=nil)
+      if cnae.present? && cnae =~ /^\d/
+        cnae =~ /^[123]/ ? 'S' : 'N'
+      else
+        nil
       end
     end
 
