@@ -38,14 +38,14 @@ describe DfeTaxweb::Nfe do
       expect(subject).to receive(:itens).and_return([])
       documento = subject.mapear_documento
       expect(documento).to be_a(Hash)
-      expect(documento.keys.sort).to eq([:destinatario, :emitente, :entrega, :itensDocFiscal, :naturezaOperacao, :retirada, :tpDocFiscal].sort)
+      expect(documento.keys.sort).to eq([:destinatario, :emitente, :entrega, :indConsumidorFinal, :itensDocFiscal, :naturezaOperacao, :retirada, :tpDocFiscal].sort)
     end
   end
 
   describe "#emitente" do
     it "retorna o hash de emitente" do
       expect(subject).to receive(:endereco).and_return({})
-      expect(subject.emitente.keys.sort).to eq([:contribuinteCOFINS, :contribuinteICMS, :contribuinteII, :contribuinteISS, :contribuintePIS, :contribuinteST, :simplesNac].sort)
+      expect(subject.emitente.keys.sort).to eq([:contribuinteCOFINS, :contribuinteICMS, :contribuinteII, :contribuinteIPI, :contribuinteISS, :contribuintePIS, :contribuinteST, :simplesNac].sort)
     end
   end
 
@@ -554,6 +554,35 @@ describe DfeTaxweb::Nfe do
       inf_nfe = subject.send(:inf_nfe)
       expect(inf_nfe).to be_a(DfeTaxweb::Conjunto)
       expect(inf_nfe.to_h).to eq({})
+    end
+  end
+
+  describe "#dest_contribuinte_icms?" do
+    let(:inf_nfe){DfeTaxweb::Conjunto.new({})}
+    before(:each){allow(subject).to receive(:inf_nfe).and_return(inf_nfe)}
+    context 'é contribuinte' do
+      it "caso ide.indIEDest=1" do
+        expect(inf_nfe).to receive(:atributo).with('ide.indIEDest').and_return(1)
+        expect(subject.dest_contribuinte_icms?).to eq('S')
+      end
+      it "caso ide.indIEDest não seja 1, 2 ou 9 mas tenha IE" do
+        expect(inf_nfe).to receive(:atributo).with('ide.indIEDest').and_return(3)
+        expect(inf_nfe).to receive(:atributo).with('dest.IE').and_return('123')
+        expect(subject.dest_contribuinte_icms?).to eq('S')
+      end
+    end
+    context 'não é contribuinte' do
+      it "caso ide.indIEDest=2 ou 9" do
+        expect(inf_nfe).to receive(:atributo).with('ide.indIEDest').and_return(2)
+        expect(subject.dest_contribuinte_icms?).to eq('N')
+        expect(inf_nfe).to receive(:atributo).with('ide.indIEDest').and_return(9)
+        expect(subject.dest_contribuinte_icms?).to eq('N')
+      end
+      it "caso ide.indIEDest não seja 1, 2 ou 9 e não tenha IE" do
+        expect(inf_nfe).to receive(:atributo).with('ide.indIEDest').and_return(3)
+        expect(inf_nfe).to receive(:atributo).with('dest.IE').and_return(nil)
+        expect(subject.dest_contribuinte_icms?).to eq('N')
+      end
     end
   end
 
