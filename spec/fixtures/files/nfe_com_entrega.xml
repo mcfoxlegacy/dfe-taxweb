@@ -1,0 +1,225 @@
+<nfeProc versao="4.00" xmlns="http://www.portalfiscal.inf.br/nfe">
+  <NFe xmlns="http://www.portalfiscal.inf.br/nfe">
+    <infNFe Id="NFe35180751185817000112550020000224411294395507" versao="4.00">
+      <ide>
+        <cUF>35</cUF>
+        <cNF>29439550</cNF>
+        <natOp>VENDA A PRAZO</natOp>
+        <mod>55</mod>
+        <serie>2</serie>
+        <nNF>22441</nNF>
+        <dhEmi>2018-07-02T10:14:15-03:00</dhEmi>
+        <dhSaiEnt>2018-07-02T10:14:15-03:00</dhSaiEnt>
+        <tpNF>1</tpNF>
+        <idDest>1</idDest>
+        <cMunFG>3550308</cMunFG>
+        <tpImp>1</tpImp>
+        <tpEmis>1</tpEmis>
+        <cDV>7</cDV>
+        <tpAmb>1</tpAmb>
+        <finNFe>1</finNFe>
+        <indFinal>0</indFinal>
+        <indPres>9</indPres>
+        <procEmi>0</procEmi>
+        <verProc>18.20.1.13</verProc>
+      </ide>
+      <emit>
+        <CNPJ>51185817000112</CNPJ>
+        <xNome>INDUSTRIA E COMERCIO FRU FRU LTDA</xNome>
+        <xFant>FRU-FRU</xFant>
+        <enderEmit>
+          <xLgr>RUA GONCALVES DIAS</xLgr>
+          <nro>300</nro>
+          <xBairro>BRAS</xBairro>
+          <cMun>3550308</cMun>
+          <xMun>SAO PAULO</xMun>
+          <UF>SP</UF>
+          <CEP>03019050</CEP>
+          <cPais>1058</cPais>
+          <xPais>Brasil</xPais>
+          <fone>1134881388</fone>
+        </enderEmit>
+        <IE>110100870113</IE>
+        <CRT>3</CRT>
+      </emit>
+      <dest>
+        <CNPJ>27197888007597</CNPJ>
+        <xNome>DUFRY DO BRASIL DUTY FREE SHOP LTDA.</xNome>
+        <enderDest>
+          <xLgr>R ESTRELA DO OESTE, BL A: A10 A11 A10E</xLgr>
+          <nro>124</nro>
+          <xBairro>PQ IND DO J. SAO GERALDO</xBairro>
+          <cMun>3518800</cMun>
+          <xMun>GUARULHOS</xMun>
+          <UF>SP</UF>
+          <CEP>07140030</CEP>
+          <cPais>1058</cPais>
+          <xPais>Brasil</xPais>
+          <fone>2121579706</fone>
+        </enderDest>
+        <indIEDest>1</indIEDest>
+        <IE>336812202117</IE>
+      </dest>
+      <entrega>
+        <CNPJ>27197888007597</CNPJ>
+        <xLgr>R ESTRELA DO OESTE, BL A: A10 A11 A10E</xLgr>
+        <nro>124</nro>
+        <xBairro>PQ IND DO J. SAO GERALDO</xBairro>
+        <cMun>3518800</cMun>
+        <xMun>GUARULHOS</xMun>
+        <UF>SP</UF>
+      </entrega>
+      <det nItem="1">
+        <prod>
+          <cProd>9602040</cProd>
+          <cEAN>SEM GTIN</cEAN>
+          <xProd>ET.IMP.100% POL. 40 MM</xProd>
+          <NCM>58071000</NCM>
+          <CFOP>5101</CFOP>
+          <uCom>MT</uCom>
+          <qCom>10000.0000</qCom>
+          <vUnCom>0.4500000000</vUnCom>
+          <vProd>4500.00</vProd>
+          <cEANTrib>SEM GTIN</cEANTrib>
+          <uTrib>MT</uTrib>
+          <qTrib>10000.0000</qTrib>
+          <vUnTrib>0.4500000000</vUnTrib>
+          <indTot>1</indTot>
+          <xPed>83116</xPed>
+        </prod>
+        <imposto>
+          <vTotTrib>0.00</vTotTrib>
+          <ICMS>
+            <ICMS20>
+              <orig>0</orig>
+              <CST>20</CST>
+              <modBC>3</modBC>
+              <pRedBC>33.33</pRedBC>
+              <vBC>3000.15</vBC>
+              <pICMS>18.00</pICMS>
+              <vICMS>540.03</vICMS>
+            </ICMS20>
+          </ICMS>
+          <PIS>
+            <PISAliq>
+              <CST>01</CST>
+              <vBC>4500.00</vBC>
+              <pPIS>0.65</pPIS>
+              <vPIS>29.25</vPIS>
+            </PISAliq>
+          </PIS>
+          <COFINS>
+            <COFINSAliq>
+              <CST>01</CST>
+              <vBC>4500.00</vBC>
+              <pCOFINS>3.00</pCOFINS>
+              <vCOFINS>135.00</vCOFINS>
+            </COFINSAliq>
+          </COFINS>
+        </imposto>
+        <infAdProd>DUFRY</infAdProd>
+      </det>
+      <total>
+        <ICMSTot>
+          <vBC>3000.15</vBC>
+          <vICMS>540.03</vICMS>
+          <vICMSDeson>0.00</vICMSDeson>
+          <vFCP>0.00</vFCP>
+          <vBCST>0.00</vBCST>
+          <vST>0.00</vST>
+          <vFCPST>0.00</vFCPST>
+          <vFCPSTRet>0.00</vFCPSTRet>
+          <vProd>4500.00</vProd>
+          <vFrete>0.00</vFrete>
+          <vSeg>0.00</vSeg>
+          <vDesc>0.00</vDesc>
+          <vII>0.00</vII>
+          <vIPI>0.00</vIPI>
+          <vIPIDevol>0.00</vIPIDevol>
+          <vPIS>29.25</vPIS>
+          <vCOFINS>135.00</vCOFINS>
+          <vOutro>0.00</vOutro>
+          <vNF>4500.00</vNF>
+          <vTotTrib>0.00</vTotTrib>
+        </ICMSTot>
+      </total>
+      <transp>
+        <modFrete>0</modFrete>
+        <transporta>
+          <xNome>NOSSO CARRO FRUFRU</xNome>
+          <IE>110100870113</IE>
+          <xEnder>RUA FERNAO DE MAGALHAES 176</xEnder>
+          <xMun>SAO PAULO</xMun>
+          <UF>SP</UF>
+        </transporta>
+        <vol>
+          <qVol>2</qVol>
+          <esp>VOLUME</esp>
+          <pesoL>22.000</pesoL>
+          <pesoB>23.000</pesoB>
+        </vol>
+      </transp>
+      <cobr>
+        <fat>
+          <nFat>22441</nFat>
+          <vOrig>4500.00</vOrig>
+          <vLiq>4500.00</vLiq>
+        </fat>
+      </cobr>
+      <pag>
+        <detPag>
+          <indPag>1</indPag>
+          <tPag>99</tPag>
+          <vPag>4500.00</vPag>
+        </detPag>
+      </pag>
+      <infAdic>
+        <infAdFisco>3-BASE DE CALCULO REDUZIDA PARA 33,33% CONF. ART.52 - ANEXOII RICMS/2000</infAdFisco>
+        <infCpl>DANFE PARA TODAS AS OPERACOES. - 3-BASE DE CALCULO REDUZIDA PARA 33,33% CONF. ART.52 - ANEXOII
+          RICMS/2000 - LOCAL DE ENTREGA: END ENTREGA: R ESTRELA DO OESTE, BL A: A10 A11 A10E, 124 - PQ IND DO J. SAO
+          GERALDO - 07140-030, GUARULHOS-SP - PEDIDO(S): 83116 - SEU(S) PEDIDO(S): 83116 - VENDEDOR: 26 - - END ENTREGA:
+          R ESTRELA DO OESTE, BL A: A10 A11 A10E, 124 - PQ IND DO J. SAO GERALDO - 07140-030, GUARULHOS-SP
+        </infCpl>
+      </infAdic>
+      <compra>
+        <xPed>83116</xPed>
+      </compra>
+    </infNFe>
+    <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+      <SignedInfo>
+        <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+        <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+        <Reference URI="#NFe35180751185817000112550020000224411294395507">
+          <Transforms>
+            <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+            <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+          </Transforms>
+          <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+          <DigestValue>TR0wgGBy566ltFJMf5GqSZIRjBs=</DigestValue>
+        </Reference>
+      </SignedInfo>
+      <SignatureValue>
+        L2fLqumn4OQDZIEA+Km3TZIactDbUEHZB6KWdpSROBbKaWeUe/lr+0bCI+Ks1tJJzh+BsZA/PHn+gktDYTGkxM631ZYOomhomqqeYdo8UvK4g6JvnWcIs8L98pUFV3gnSTNpY2Q86zxTBaigdeK7hDkCEqlq0yvOSX4ZVs97rnwKqTAyxiqseRTAFssghkuAfJRaM2aka8n5eG6ANapSwMtTKT+xmIxH2lO1AnYTSBu8I0rCpYvYWyP89ehUmVtS6v2NHg5rNcdSk6hE+JrAuwj2eBiQtlIwzrudmw8E0UmVyO5AP/ZstQRZisKMM3vxaX+C8K8gGvMbe7fnjJ9fag==
+      </SignatureValue>
+      <KeyInfo>
+        <X509Data>
+          <X509Certificate>
+            MIIH4zCCBcugAwIBAgIIRivXiuP1IJ0wDQYJKoZIhvcNAQELBQAwczELMAkGA1UEBhMCQlIxEzARBgNVBAoTCklDUC1CcmFzaWwxNjA0BgNVBAsTLVNlY3JldGFyaWEgZGEgUmVjZWl0YSBGZWRlcmFsIGRvIEJyYXNpbCAtIFJGQjEXMBUGA1UEAxMOQUMgU0FGRVdFQiBSRkIwHhcNMTgwMzI3MTI1NjM1WhcNMTkwMzI3MTI1NjM1WjCB4jELMAkGA1UEBhMCQlIxEzARBgNVBAoTCklDUC1CcmFzaWwxCzAJBgNVBAgTAlNQMRIwEAYDVQQHEwlTQU8gUEFVTE8xNjA0BgNVBAsTLVNlY3JldGFyaWEgZGEgUmVjZWl0YSBGZWRlcmFsIGRvIEJyYXNpbCAtIFJGQjEWMBQGA1UECxMNUkZCIGUtQ05QSiBBMTESMBAGA1UECxMJQVIgVE9QIElEMTkwNwYDVQQDEzBJTkRVU1RSSUEgRSBDT01FUkNJTyBGUlUgRlJVIExUREE6NTExODU4MTcwMDAxMTIwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCho7/9CJJiFWkKBctjLkJ6RzxVYnH9sUhkf96GcqlrNuxHTKhh/vjwvWh43Qf8FvNkQaUhIXauITaS+EDCzfYolI7SGu2Ge/JGsnyvdGfZoOshItLyS17maGbSC8AYGvFmvuNIR2m2ehwwPEnFT7RoifkodBpBgwPN1UVVWICzS3PnzA4v1yBs5BtOrjdOc50+S+wYcUttyRnKsrtH0sNawuxqPzpgKmYrVjeMwWVCjI3ZRk+L3ClvTY9+MCu7Q6Cq6MUD8S/MzsKPbVioJVTvXc0bsC2aq4hvTXcg8YCt2nIe09lzsEbcwrp5aPdmHevKiEXB+ol6AWzi6K2CLlpTAgMBAAGjggMJMIIDBTAfBgNVHSMEGDAWgBTfRU9Px+HcOMxKDCDn+OlZrR9eYTAOBgNVHQ8BAf8EBAMCBeAwbQYDVR0gBGYwZDBiBgZgTAECATMwWDBWBggrBgEFBQcCARZKaHR0cDovL3JlcG9zaXRvcmlvLmFjc2FmZXdlYi5jb20uYnIvYWMtc2FmZXdlYnJmYi9hYy1zYWZld2ViLXJmYi1wYy1hMS5wZGYwgf8GA1UdHwSB9zCB9DBPoE2gS4ZJaHR0cDovL3JlcG9zaXRvcmlvLmFjc2FmZXdlYi5jb20uYnIvYWMtc2FmZXdlYnJmYi9sY3ItYWMtc2FmZXdlYnJmYnYyLmNybDBQoE6gTIZKaHR0cDovL3JlcG9zaXRvcmlvMi5hY3NhZmV3ZWIuY29tLmJyL2FjLXNhZmV3ZWJyZmIvbGNyLWFjLXNhZmV3ZWJyZmJ2Mi5jcmwwT6BNoEuGSWh0dHA6Ly9hY3JlcG9zaXRvcmlvLmljcGJyYXNpbC5nb3YuYnIvbGNyL1NBRkVXRUIvbGNyLWFjLXNhZmV3ZWJyZmJ2Mi5jcmwwgYsGCCsGAQUFBwEBBH8wfTBRBggrBgEFBQcwAoZFaHR0cDovL3JlcG9zaXRvcmlvLmFjc2FmZXdlYi5jb20uYnIvYWMtc2FmZXdlYnJmYi9hYy1zYWZld2VicmZidjIucDdiMCgGCCsGAQUFBzABhhxodHRwOi8vb2NzcC5hY3NhZmV3ZWIuY29tLmJyMIGoBgNVHREEgaAwgZ2BFEZJTkBXSkFGUlVGUlUuQ09NLkJSoBcGBWBMAQMCoA4TDFdBTFRFUiBBUklEQaAZBgVgTAEDA6AQEw41MTE4NTgxNzAwMDExMqA4BgVgTAEDBKAvEy0xNTExMTk1MjUwOTMzMzk2ODcyMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDCgFwYFYEwBAwegDhMMMDAwMDAwMDAwMDAwMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDBDAJBgNVHRMEAjAAMA0GCSqGSIb3DQEBCwUAA4ICAQByIA2DIxnvGtCWlmVCJ7LeRaKWo1zSnApS15bEPuL6JNISMAtzNIXnPRkTZlzDH+ujDdDI6zODmsg0pN726ua3H8j5vX2iEiQh5VGEwSmLImgL4D9mAYv9WgozmKfXJx1VP/rlfnh/n6XARZFgZ0ttAodieDuchpkhDYhv7FFDjAdFpGy635zfVj/T0fj0V+duPwQmT4eZsGuhp1r5DFxjtQu1Nf2miB8QCE6PSujr3QIdbRB8LpiM0O1/3PFRsXdysowRW23xbk3F3Fd0XFpv+Etek84N60GYJ2KJtBFc/OZ7UDwAFYw/5k+S41yT8uDju5dL8GXwBPtciidVjKLCZfYppzvz6tGeeJ3zJF8XXE2LhL4PZ94GL8WXyhWClHh4l5G6DKtv2wT6I7PaMy86QCD4KoyduMR5RpEwFDQA3Y6HljN6UhDXwfi90CppUbPi/9y/Nsw0AyJGa+l2MV09dLVhUBcAKTq+mXsrjyvb0GE+N3EtmucqGC4BA2tDe0a84Vahlj9iuzoVXU1gTpkCBSp+lx5osna6d9LshUTzhEkySwDSM+vFz7oG41UEtlXUP6RCF9GueGpVDOOz3G3xCLRKSBCYnuvqQJlkoQTbSmMCrXaMFRJViCrChoIMmLEIDJg2x0KIZN8aW6AEKes6q/bNlWeyCBLeuYtriZtPRg==
+          </X509Certificate>
+        </X509Data>
+      </KeyInfo>
+    </Signature>
+  </NFe>
+  <protNFe versao="4.00">
+    <infProt Id="Id135180439268485">
+      <tpAmb>1</tpAmb>
+      <verAplic>SP_NFE_PL009_V4</verAplic>
+      <chNFe>35180751185817000112550020000224411294395507</chNFe>
+      <dhRecbto>2018-07-02T13:58:08-03:00</dhRecbto>
+      <nProt>135180439268485</nProt>
+      <digVal>TR0wgGBy566ltFJMf5GqSZIRjBs=</digVal>
+      <cStat>100</cStat>
+      <xMotivo>Autorizado o uso da NF-e</xMotivo>
+    </infProt>
+  </protNFe>
+</nfeProc>

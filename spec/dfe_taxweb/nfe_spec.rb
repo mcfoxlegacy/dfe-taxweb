@@ -25,6 +25,13 @@ describe DfeTaxweb::Nfe do
       expect(subject).to receive(:mapear_documento).and_return({})
       expect(subject.to_dfe).to be_a(Hash)
     end
+
+    it "converte nfe com entrega" do
+      dfe_taxweb = described_class.new(File.read("spec/fixtures/files/nfe_com_entrega.xml"))
+      dfe = dfe_taxweb.to_dfe
+      expect(dfe[:entrega]).to be_a(Hash)
+    end
+
   end
 
   describe "#mapear_documento" do

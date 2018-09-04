@@ -112,11 +112,11 @@ module DfeTaxweb
     end
 
     def retirada
-      inf_nfe.atributo('retirada')
+      inf_nfe.atributo('retirada').to_h
     end
 
     def entrega
-      inf_nfe.atributo('entrega')
+      inf_nfe.atributo('entrega').to_h
     end
 
     def itens
