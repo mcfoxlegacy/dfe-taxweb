@@ -46,8 +46,6 @@ describe DfeTaxweb::Nfe do
       expect(subject).to receive(:tipo_de_operacao).and_return(nil)
       expect(subject).to receive(:emitente).and_return({})
       expect(subject).to receive(:destinatario).and_return({})
-      expect(subject).to receive(:retirada).and_return({})
-      expect(subject).to receive(:entrega).and_return({})
       expect(subject).to receive(:itens).and_return([])
       documento = subject.mapear_documento
       expect(documento).to be_a(Hash)
@@ -78,26 +76,6 @@ describe DfeTaxweb::Nfe do
     it "retorna {} quando não é informado um endereço válido" do
       expect(subject.endereco({})).to eq({})
       expect(subject.endereco(nil)).to eq({})
-    end
-  end
-
-  describe "#retirada" do
-    it "retorna o hash de retirada" do
-      expect(subject).to receive_message_chain(:inf_nfe).and_return(DfeTaxweb::Conjunto.new({retirada: {fake: true}}))
-      expect(subject.retirada).to be_a(DfeTaxweb::Conjunto)
-    end
-    it "retorna nil quando não há retirada" do
-      expect(subject.retirada).to be_nil
-    end
-  end
-
-  describe "#entrega" do
-    it "retorna o hash de entrega" do
-      expect(subject).to receive(:inf_nfe).and_return(DfeTaxweb::Conjunto.new({entrega: {fake: true}}))
-      expect(subject.entrega).to be_a(DfeTaxweb::Conjunto)
-    end
-    it "retorna nil quando não há entrega" do
-      expect(subject.retirada).to be_nil
     end
   end
 

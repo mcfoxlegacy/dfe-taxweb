@@ -44,8 +44,8 @@ module DfeTaxweb
           indConsumidorFinal: (inf_nfe.atributo('ide.indFinal') == '1' ? 'S' : 'N'),
           emitente: emitente,
           destinatario: destinatario,
-          retirada: retirada,
-          entrega: entrega,
+          retirada: inf_nfe.atributo('retirada').to_h,
+          entrega: inf_nfe.atributo('entrega').to_h,
           itensDocFiscal: itens,
           tipoOperacao: tipo_de_operacao,
           tpDocFiscal: 'FT',
@@ -109,14 +109,6 @@ module DfeTaxweb
           xPais: ender.atributo('xPais'),
           fone: ender.atributo('fone')
       }.compact
-    end
-
-    def retirada
-      inf_nfe.atributo('retirada').to_h
-    end
-
-    def entrega
-      inf_nfe.atributo('entrega').to_h
     end
 
     def itens
