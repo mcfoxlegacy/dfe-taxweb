@@ -144,7 +144,7 @@ module DfeTaxweb
             vlSeguro: produto.atributo('vSeg'),
             vlDesconto: produto.atributo('vDesc'),
             vlOda: produto.atributo('vOutro'),
-            DI: produto.atributo('DI'),
+            DI: produto.atributo('DI').to_h,
             xPed: produto.atributo('xPed'),
             nItemPed: produto.atributo('nItemPed'),
             cdClassificacao: 'M',

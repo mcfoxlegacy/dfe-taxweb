@@ -35,6 +35,7 @@ module DfeTaxweb
           item[key.to_sym]
         end
       end
+
       if valor.is_a?(Array)
         valor.map {|v| normaliza_valores(v)}.compact
       else
@@ -51,11 +52,7 @@ module DfeTaxweb
 
     private
     def normaliza_valores(valor)
-      if valor.is_a?(Hash)
-        Conjunto.new(valor)
-      else
-        valor
-      end
+      valor.is_a?(Hash) ? Conjunto.new(valor) : valor
     end
 
   end

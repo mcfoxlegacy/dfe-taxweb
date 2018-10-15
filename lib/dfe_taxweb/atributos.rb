@@ -57,6 +57,7 @@ module DfeTaxweb
     def normalize_parent_key(parent, key)
       parent.present? ? "#{parent}.#{key}" : "#{key}"
     end
+
   end
 
 end

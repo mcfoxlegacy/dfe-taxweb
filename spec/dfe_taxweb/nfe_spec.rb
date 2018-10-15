@@ -32,6 +32,12 @@ describe DfeTaxweb::Nfe do
       expect(dfe[:entrega]).to be_a(Hash)
     end
 
+    it "converte nfe com DI" do
+      dfe_taxweb = described_class.new(File.read("spec/fixtures/files/nfe_com_di.xml"))
+      dfe = dfe_taxweb.to_dfe
+      expect(dfe[:itensDocFiscal][0][:DI]).to be_a(Hash)
+    end
+
   end
 
   describe "#mapear_documento" do
